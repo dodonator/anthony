@@ -16,6 +16,10 @@ class Job:
         self.status = status
         self.job_id = uuid4()
 
+    def __str__(self) -> str:
+        prefix = self.status.prefix
+        return f"{prefix} {self.title} {self.job_id}"
+
 
 class Tag:
     pass
