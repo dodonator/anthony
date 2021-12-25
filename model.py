@@ -1,22 +1,27 @@
 from dataclasses import dataclass
 from collections import namedtuple
 from itertools import tee
+from datetime import date
 
 
-@dataclass
 class Job:
     title: str
     description: str
     status: "Job_Status"
     job_id: str
     job_counter: int = 0
+    creation_date: date
 
-    def __init__(self, title: str, description, status: "Job_Status") -> None:
+    def __init__(
+        self, title: str, description, status: "Job_Status", creation_date=None
+    ) -> None:
         self.title = title
         self.description = description
         self.status = status
         self.job_id = _convert(Job.job_counter)
         Job.job_counter += 1
+        if creation_date is None:
+            creation_date = date.today()
 
     def __str__(self) -> str:
         prefix = self.status.prefix
