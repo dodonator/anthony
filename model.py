@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from collections import namedtuple
-from itertools import tee
 from datetime import date
 
 
@@ -18,10 +17,13 @@ class Job:
         self.title = title
         self.description = description
         self.status = status
-        self.job_id = _convert(Job.job_counter)
-        Job.job_counter += 1
         if creation_date is None:
             creation_date = date.today()
+        self.creation_date = creation_date
+
+        creation_year = self.creation_date.year
+        self.job_id = f"{creation_year}-{_convert(Job.job_counter)}"
+        Job.job_counter += 1
 
     def __str__(self) -> str:
         prefix = self.status.prefix
@@ -44,14 +46,5 @@ Postponed = Job_Status("Postponed", "[>]", 2)
 Cancelled = Job_Status("Cancelled", "[x]", 3)
 
 
-def _pairwise(iterable):
-    # pairwise('ABCDEFG') --> AB BC CD DE EF FG
-    a, b = tee(iterable)
-    next(b, None)
-    return zip(a, b)
-
-
-def _convert(value, length=6):
-    h = hex(value)[2:]
-    h = h.rjust(length, "0")
-    return "-".join(("".join(t) for t in _pairwise(h)))
+def _convert(value, padding=6):
+    return f"{value:0{padding}x}"
