@@ -29,3 +29,9 @@ class Job_Status:
     name: str
     prefix: str
     code: int
+
+
+Finished = Job_Status("Fininished", "[+]", 0)
+Open = Job_Status("Open", "[.]", 1)
+Postponed = Job_Status("Postponed", "[>]", 2)
+Cancelled = Job_Status("Cancelled", "[x]", 3)
