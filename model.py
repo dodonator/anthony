@@ -7,10 +7,10 @@ from collections import namedtuple
 class Job:
     title: str
     description: str
-    status: int
+    status: "Job_Status"
     job_id: UUID
 
-    def __init__(self, title: str, description, status) -> None:
+    def __init__(self, title: str, description, status: "Job_Status") -> None:
         self.title = title
         self.description = description
         self.status = status
