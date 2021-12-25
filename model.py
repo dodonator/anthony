@@ -8,13 +8,15 @@ class Job:
     title: str
     description: str
     status: "Job_Status"
-    job_id: UUID
+    job_id: str
+    job_counter: int = 0
 
     def __init__(self, title: str, description, status: "Job_Status") -> None:
         self.title = title
         self.description = description
         self.status = status
-        self.job_id = uuid4()
+        self.job_id = hex(Job.job_counter)
+        Job.job_counter += 1
 
     def __str__(self) -> str:
         prefix = self.status.prefix
