@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from uuid import uuid4, UUID
 from collections import namedtuple
 from itertools import tee
 
