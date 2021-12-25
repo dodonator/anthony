@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from uuid import uuid4, UUID
+from collections import namedtuple
 
 
 @dataclass
@@ -24,12 +25,7 @@ class Day:
     pass
 
 
-@dataclass
-class Job_Status:
-    name: str
-    prefix: str
-    code: int
-
+Job_Status = namedtuple("Job_Status", ("name", "prefix", "code"))
 
 Finished = Job_Status("Fininished", "[+]", 0)
 Open = Job_Status("Open", "[.]", 1)
