@@ -22,3 +22,10 @@ class Tag:
 
 class Day:
     pass
+
+
+@dataclass
+class Job_Status:
+    name: str
+    prefix: str
+    code: int
