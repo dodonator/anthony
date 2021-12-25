@@ -1,5 +1,12 @@
+from dataclasses import dataclass
+from uuid import uuid4, UUID
+
+
 class Job:
-    pass
+    title: str
+    description: str
+    status: int
+    job_id: UUID
 
 
 class Tag:
@@ -7,8 +14,4 @@ class Tag:
 
 
 class Day:
-    pass
-
-
-class Item_ID:
     pass
