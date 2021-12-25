@@ -9,6 +9,12 @@ class Job:
     status: int
     job_id: UUID
 
+    def __init__(self, title: str, description, status) -> None:
+        self.title = title
+        self.description = description
+        self.status = status
+        self.job_id = uuid4()
+
 
 class Tag:
     pass
