@@ -30,11 +30,11 @@ class Job:
 
     def __repr__(self) -> str:
         title = self.title
-        description = self.description
+        desc = self.description
         status = self.status
         job_id = self.job_id
         creation = self.creation_date
-        output = f"Job({title=}, {description=}, {status=}, {job_id=}, {creation=})"
+        output = f"Job({title=}, {desc=}, {status=}, {job_id=}, {creation=})"
         return output
 
 
