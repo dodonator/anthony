@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from collections import namedtuple
 from datetime import date
 
@@ -28,6 +27,15 @@ class Job:
     def __str__(self) -> str:
         prefix = self.status.prefix
         return f"{prefix} {self.title} {self.job_id}"
+
+    def __repr__(self) -> str:
+        title = self.title
+        description = self.description
+        status = self.status
+        job_id = self.job_id
+        creation = self.creation_date
+        output = f"Job({title=}, {description=}, {status=}, {job_id=}, {creation=})"
+        return output
 
 
 class Tag:
