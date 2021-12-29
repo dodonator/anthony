@@ -49,9 +49,9 @@ class Day:
 Job_Status = namedtuple("Job_Status", ("name", "prefix", "code"))
 
 Finished = Job_Status("Fininished", "[+]", 0)
-Open = Job_Status("Open", "[.]", 1)
-Postponed = Job_Status("Postponed", "[>]", 2)
-Cancelled = Job_Status("Cancelled", "[x]", 3)
+Cancelled = Job_Status("Cancelled", "[x]", 1)
+Open = Job_Status("Open", "[.]", 2)
+Postponed = Job_Status("Postponed", "[>]", 3)
 
 
 def _convert(value, padding=6):
