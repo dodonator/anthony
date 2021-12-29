@@ -37,6 +37,18 @@ class Job:
         output = f"Job({title=}, {desc=}, {status=}, {job_id=}, {creation=})"
         return output
 
+    @staticmethod
+    def from_dict(d: dict):
+        job_id = d["job id"]
+        title = d["title"]
+        description = d["description"]
+        status = job_stati[int(d["status"])]
+        creation_date = d["creation date"]
+        j = Job(title, description, status)
+        j.creation_date = creation_date
+
+        return j
+
 
 class Tag:
     pass
@@ -52,6 +64,8 @@ Finished = Job_Status("Fininished", "[+]", 0)
 Cancelled = Job_Status("Cancelled", "[x]", 1)
 Open = Job_Status("Open", "[.]", 2)
 Postponed = Job_Status("Postponed", "[>]", 3)
+
+job_stati = [Finished, Cancelled, Open, Postponed]
 
 
 def _convert(value, padding=6):
