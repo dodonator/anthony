@@ -45,6 +45,7 @@ class Job:
         status = job_stati[int(d["status"])]
         creation_date = d["creation date"]
         j = Job(title, description, status)
+        j.job_id = job_id
         j.creation_date = creation_date
 
         return j
