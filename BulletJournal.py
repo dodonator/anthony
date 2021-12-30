@@ -1,7 +1,8 @@
+import csv
+
 from model import Job
 from typing import Iterable, List
 from pathlib import Path
-import csv
 
 
 class BulletJournal:
