@@ -10,6 +10,7 @@ class BulletJournal:
     tasks: List[Job]
     past_path: Path
     present_path: Path
+    header = ["job id", "title", "description", "status", "creation date"]
 
     def __init__(self) -> None:
         # generating paths
@@ -21,6 +22,11 @@ class BulletJournal:
         # initialize file for today
         if not self.present_path.exists():
             self.present_path.touch()
+
+        if not self.present_path.stat().st_size:
+            with self.present_path.open("w", newline="") as file:
+                writer = csv.writer(file, delimiter=",")
+                writer.writerow(self.header)
 
         # initiate job list
         self.tasks = list()
@@ -43,7 +49,7 @@ class BulletJournal:
         if not self.past_path.exists():
             return
         with self.past_path.open("r", newline="") as csv_file:
-            reader = csv.DictReader(csv_file)
+            reader = csv.DictReader(csv_file, delimiter=",")
             for row in reader:
                 job = Job.from_dict(row)
                 if job.status == 0:
@@ -52,7 +58,7 @@ class BulletJournal:
     def load_present(self):
         """loads job from the present"""
         with self.present_path.open("r", newline="") as csv_file:
-            reader = csv.DictReader(csv_file)
+            reader = csv.DictReader(csv_file, delimiter=",")
             for row in reader:
                 job = Job.from_dict(row)
                 self.tasks.append(job)
