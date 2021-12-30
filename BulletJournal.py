@@ -49,6 +49,14 @@ class BulletJournal:
                 if job.status == 0:
                     self.tasks.append(job)
 
+    def load_present(self):
+        """loads job from the present"""
+        with self.present_path.open("r", newline="") as csv_file:
+            reader = csv.DictReader(csv_file)
+            for row in reader:
+                job = Job.from_dict(row)
+                self.tasks.append(job)
+
     def save_active(self):
         """saves active jobs to memory"""
         active_jobs = list(filter(lambda j: j.status.code >= 2, self.tasks))
