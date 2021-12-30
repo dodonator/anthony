@@ -30,6 +30,8 @@ class BulletJournal:
 
         # initiate job list
         self.tasks = list()
+        self.load_past()
+        self.load_present()
 
     def __iter__(self) -> Iterable[Job]:
         """iterates over all jobs"""
