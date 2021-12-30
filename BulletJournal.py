@@ -18,16 +18,7 @@ class BulletJournal:
         self.past_path = Path(f"{yesterday.isoformat()}.csv")
         self.present_path = Path(f"{today.isoformat()}.csv")
 
-        # initialize files
-        header = ["job id", "title", "description", "status", "creation date"]
-        if not self.past_path.exists():
-            self.past_path.touch()
-
-        if not self.past_path.stat().st_size:
-            with self.past_path.open("w", newline="") as archive:
-                writer = csv.writer(archive, delimiter=",")
-                writer.writerow(header)
-
+        # initialize file for today
         if not self.present_path.exists():
             self.present_path.touch()
 
