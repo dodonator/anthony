@@ -1,13 +1,13 @@
 import csv
 
 from Job import Job
-from typing import Iterable, List
+from typing import Iterable
 from pathlib import Path
 from datetime import date, timedelta
 
 
 class BulletJournal:
-    tasks: List[Job]
+    jobs: dict
     past_path: Path
     present_path: Path
     header = ["job id", "title", "description", "status", "creation date"]
@@ -29,14 +29,14 @@ class BulletJournal:
                 writer.writerow(self.header)
 
         # initiate job list
-        self.tasks = list()
+        self.jobs = dict()
         self.load_past()
         self.load_present()
 
     def __iter__(self) -> Iterable[Job]:
         """iterates over all jobs"""
-        for job in self.tasks:
-            yield job
+        for job_id, job in self.jobs.items():
+            yield job_id, job
 
     def __len__(self) -> int:
         """returns number of all jobs
@@ -44,7 +44,7 @@ class BulletJournal:
         Returns:
             int: number of jobs
         """
-        return len(self.tasks)
+        return len(self.jobs)
 
     def load_past(self):
         """loads active jobs from the past"""
@@ -55,7 +55,7 @@ class BulletJournal:
             for row in reader:
                 job = Job.from_dict(row)
                 if job.status == 0:
-                    self.tasks.append(job)
+                    self.jobs[job.job_id] = job
 
     def load_present(self):
         """loads job from the present"""
@@ -63,7 +63,7 @@ class BulletJournal:
             reader = csv.DictReader(csv_file, delimiter=",")
             for row in reader:
                 job = Job.from_dict(row)
-                self.tasks.append(job)
+                self.jobs[job.job_id] = job
 
     def save(self):
         """saves jobs from the present to memory"""
@@ -71,7 +71,7 @@ class BulletJournal:
             writer = csv.writer(file, delimiter=",")
             writer.writerow(self.header)
 
-            for job in self.tasks:
+            for job_id, job in self.jobs.items():
                 row = [
                     job.job_id,
                     job.title,
@@ -84,7 +84,7 @@ class BulletJournal:
     def add(self, title, description="", status=0, creation_date=None):
         """adds job to BulletJournal"""
         job = Job(title, description, status, creation_date)
-        self.tasks.append(job)
+        self.jobs[job.job_id] = job
 
 
 if __name__ == "__main__":
