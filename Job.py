@@ -35,6 +35,9 @@ class Job:
         output = f"Job({title=}, {desc=}, {status=}, {job_id=}, {creation=})"
         return output
 
+    def __hash__(self) -> int:
+        return hash(f"{self.title}{self.description}{self.status}{self.creation_date}")
+
     @staticmethod
     def from_dict(d: dict):
         job_id = d["job id"]
