@@ -1,17 +1,23 @@
-from collections import namedtuple
 from datetime import date
+
+
+# example job
+# title: coding
+# description: working on coding projects
+# status: 0 for open or 1 for closed
+# creation_date: datetime.date(2021, 12, 30)
 
 
 class Job:
     title: str
     description: str
-    status: "Job_Status"
+    status: int
     job_id: str
     job_counter: int = 0
     creation_date: date
 
     def __init__(
-        self, title: str, description, status: "Job_Status", creation_date=None
+        self, title: str, description, status: int, creation_date=None
     ) -> None:
         self.title = title
         self.description = description
@@ -42,7 +48,7 @@ class Job:
         job_id = d["job id"]
         title = d["title"]
         description = d["description"]
-        status = job_stati[int(d["status"])]
+        status = int(d["status"])
         creation_date_iso = d["creation date"]
         creation_date = date.fromisoformat(creation_date_iso)
         j = Job(title, description, status, creation_date)
@@ -57,16 +63,6 @@ class Tag:
 
 class Day:
     pass
-
-
-Job_Status = namedtuple("Job_Status", ("name", "prefix", "code"))
-
-Finished = Job_Status("Fininished", "[+]", 0)
-Cancelled = Job_Status("Cancelled", "[x]", 1)
-Open = Job_Status("Open", "[.]", 2)
-Postponed = Job_Status("Postponed", "[>]", 3)
-
-job_stati = [Finished, Cancelled, Open, Postponed]
 
 
 def _convert(value, padding=6):
