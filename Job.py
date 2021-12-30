@@ -25,7 +25,7 @@ class Job:
 
     def __str__(self) -> str:
         prefix = f"[{self.status}]"
-        return f"{prefix} {self.title} {self.job_id}"
+        return f"{prefix} | {self.job_id} | {self.title}"
 
     def __repr__(self) -> str:
         title = self.title
