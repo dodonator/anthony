@@ -24,8 +24,7 @@ class Job:
         Job.job_counter += 1
 
     def __str__(self) -> str:
-        prefix = f"[{self.status}]"
-        return f"{prefix} | {self.job_id} | {self.title}"
+        return f"{self.job_id} | {self.status} | {self.title}"
 
     def __repr__(self) -> str:
         title = self.title
