@@ -39,7 +39,7 @@ class BulletJournal:
 
     def __iter__(self) -> Iterable[Job]:
         """iterates over all jobs"""
-        for job in self.task:
+        for job in self.tasks:
             yield job
 
     def __len__(self) -> int:
