@@ -91,6 +91,11 @@ class BulletJournal:
         job = self.jobs[job_id]
         job.status = 1
 
+    def cancel(self, job_id: str):
+        """marks a job as cancelled"""
+        job = self.jobs[job_id]
+        job.status = 2
+
 
 if __name__ == "__main__":
     BJ = BulletJournal()
