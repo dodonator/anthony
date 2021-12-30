@@ -86,6 +86,7 @@ class BulletJournal:
         """adds job to BulletJournal"""
         job = Job(title, description, status, creation_date)
         self.jobs[job.job_id] = job
+        return job
 
     def complete(self, job_id: str):
         """marks a job as completed"""
