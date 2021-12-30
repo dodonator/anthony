@@ -43,10 +43,10 @@ class Job:
         title = d["title"]
         description = d["description"]
         status = job_stati[int(d["status"])]
-        creation_date = d["creation date"]
-        j = Job(title, description, status)
+        creation_date_iso = d["creation date"]
+        creation_date = date.fromisoformat(creation_date_iso)
+        j = Job(title, description, status, creation_date)
         j.job_id = job_id
-        j.creation_date = creation_date
 
         return j
 
