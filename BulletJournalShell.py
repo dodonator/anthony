@@ -10,6 +10,12 @@ class BulletJournalShell(cmd.Cmd):
     def do_add(self, line):
         job = self.journal.add(*line.split(" "))
         print(f"created job {job}")
+        print()
+
+    def do_list(self, line):
+        for job in self.journal:
+            print(job)
+        print()
 
 
 if __name__ == "__main__":
