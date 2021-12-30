@@ -86,6 +86,11 @@ class BulletJournal:
         job = Job(title, description, status, creation_date)
         self.jobs[job.job_id] = job
 
+    def complete(self, job_id: str):
+        """marks a job as completed"""
+        job = self.jobs[job_id]
+        job.status = 1
+
 
 if __name__ == "__main__":
     BJ = BulletJournal()
