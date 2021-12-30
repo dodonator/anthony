@@ -81,6 +81,11 @@ class BulletJournal:
                 ]
                 writer.writerow(row)
 
+    def add(self, title, description="", status=0, creation_date=None):
+        """adds job to BulletJournal"""
+        job = Job(title, description, status, creation_date)
+        self.tasks.append(job)
+
 
 if __name__ == "__main__":
     BJ = BulletJournal()
