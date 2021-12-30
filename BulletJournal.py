@@ -1,6 +1,6 @@
 import csv
 
-from model import Job
+from Job import Job
 from typing import Iterable, List
 from pathlib import Path
 from datetime import date, timedelta
