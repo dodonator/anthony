@@ -65,44 +65,21 @@ class BulletJournal:
                 job = Job.from_dict(row)
                 self.tasks.append(job)
 
-    def save_active(self):
-        """saves active jobs to memory"""
-        active_jobs = list(filter(lambda j: j.status.code >= 2, self.tasks))
-        header = ["job id", "title", "description", "status", "creation date"]
-
-        with self.present_path.open("w", newline="") as active:
-            writer = csv.writer(active, delimiter=",")
-            writer.writerow(header)
-
-            for job in active_jobs:
-                job_id = job.job_id
-                title = job.title
-                description = job.description
-                status = str(job.status.code)
-                creation = job.creation_date.isoformat()
-
-                writer.writerow([job_id, title, description, status, creation])
-
-    def save_archive(self):
-        """saves inactive jobs to memory"""
-        inactive_jobs = list(filter(lambda j: j.status.code < 2, self.tasks))
-
-        with self.past_path.open("a", newline="") as archive:
-            writer = csv.writer(archive, delimiter=",")
-
-            for job in inactive_jobs:
-                job_id = job.job_id
-                title = job.title
-                description = job.description
-                status = str(job.status.code)
-                creation = job.creation_date.isoformat()
-
-                writer.writerow([job_id, title, description, status, creation])
-
     def save(self):
-        """saves jobs"""
-        self.save_active()
-        self.save_archive()
+        """saves jobs from the present to memory"""
+        with self.present_path.open("w", newline="") as file:
+            writer = csv.writer(file, delimiter=",")
+            writer.writerow(self.header)
+
+            for job in self.tasks:
+                row = [
+                    job.job_id,
+                    job.title,
+                    job.description,
+                    str(job.status),
+                    job.creation_date.isoformat(),
+                ]
+                writer.writerow(row)
 
 
 if __name__ == "__main__":
