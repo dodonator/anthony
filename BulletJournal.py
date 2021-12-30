@@ -3,6 +3,7 @@ import csv
 from model import Job
 from typing import Iterable, List
 from pathlib import Path
+from datetime import date, timedelta
 
 
 class BulletJournal:
@@ -10,15 +11,12 @@ class BulletJournal:
     past_path: Path
     present_path: Path
 
-    def __init__(self, archive_path, active_path) -> None:
-        # converting to Path
-        if isinstance(archive_path, str):
-            archive_path = Path(archive_path)
-        self.past_path = archive_path
-
-        if isinstance(active_path, str):
-            active_path = Path(active_path)
-        self.present_path = active_path
+    def __init__(self) -> None:
+        # generating paths
+        today = date.today()
+        yesterday = today + timedelta(days=-1)
+        self.past_path = Path(f"{yesterday.isoformat()}.csv")
+        self.present_path = Path(f"{today.isoformat()}.csv")
 
         # initialize files
         header = ["job id", "title", "description", "status", "creation date"]
@@ -102,4 +100,4 @@ class BulletJournal:
 
 
 if __name__ == "__main__":
-    BJ = BulletJournal("archive.csv", "active.csv")
+    BJ = BulletJournal()
