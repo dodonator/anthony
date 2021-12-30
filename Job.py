@@ -50,7 +50,3 @@ class Job:
         j.job_id = job_id
 
         return j
-
-
-def _convert(value, padding=6):
-    return f"{value:0{padding}x}"
