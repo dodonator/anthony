@@ -24,7 +24,6 @@ class BulletJournal:
 
         # initiate job list
         self.tasks = list()
-        self.load_active()
 
     def __iter__(self) -> Iterable[Job]:
         """iterates over all jobs"""
@@ -39,16 +38,16 @@ class BulletJournal:
         """
         return len(self.tasks)
 
-    def load_active(self):
-        """loads active jobs from memory"""
-        if not self.present_path.exists():
+    def load_past(self):
+        """loads active jobs from the past"""
+        if not self.past_path.exists():
             return
-
-        with self.present_path.open("r", newline="") as active:
-            reader = csv.DictReader(active, delimiter=",")
+        with self.past_path.open("r", newline="") as csv_file:
+            reader = csv.DictReader(csv_file)
             for row in reader:
                 job = Job.from_dict(row)
-                self.tasks.append(job)
+                if job.status == 0:
+                    self.tasks.append(job)
 
     def save_active(self):
         """saves active jobs to memory"""
