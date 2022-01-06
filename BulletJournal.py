@@ -1,9 +1,9 @@
 import csv
+from datetime import date, timedelta
+from pathlib import Path
+from typing import Iterable
 
 from Job import Job
-from typing import Iterable
-from pathlib import Path
-from datetime import date, timedelta
 
 
 class BulletJournal:

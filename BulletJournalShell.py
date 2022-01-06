@@ -1,4 +1,5 @@
 import cmd
+
 from BulletJournal import BulletJournal
 
 
