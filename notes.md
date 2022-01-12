@@ -19,6 +19,15 @@ Diese Datei speichert die Tasks des aktuellen Tages menschenlesbar ab. Es könne
 
 Diese Datei enthält alle beendeten Tasks. Ein Task gilt als beendet, wenn er entweder abgebrochen oder ausgeführt wurde. Zu jedem Task wird hierbei der Titel, die Beschreibung, der Status, das Erstelldatum, das Abschlussdatum sowie die ID gespeichert.
 
+### Laden und Speichern von Tasks
+
+1. Das Programm wird gestartet
+2. Die `today.md` Datei wird eingelesen.
+3. Das Datum der Datei wird mit dem aktuellem Datum verglichen. Sind die Daten gleich geht es weiter mit Punkt 6.
+4. Alle Tasks die in der `today.md` Datei entweder als ausgeführt oder als abgebrochen markiert sind werden in die `history.csv` Datei geschrieben, als Abschlussdatum wird das Datum der `today.md` Datei angegeben.
+5. Alle Tasks, die in der `today.md` Datei entweder als verschoben oder als offen markiert sind werden in eine neue `today.md` Datei mit dem aktuellem Datum geschrieben.
+6. Tasks können nun über die CLI hinzugefügt oder bearbeitet werden.
+
 ## Speichern von Tasks
 
 Tasks sollen in menschenlesbarer plain text Dateien gespeichert werden. Siehe als [Beispiel](./example.md)
