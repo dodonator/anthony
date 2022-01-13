@@ -60,7 +60,6 @@ class BulletJournalShell(cmd.Cmd):
             print(f"{task.id} | {task.title} | {task.creation}")
 
     def do_close(self, line):
-        # save_tasks(self.journal, self.path)
         return True
 
     def preloop(self) -> None:
