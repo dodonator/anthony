@@ -49,7 +49,8 @@ class BulletJournalShell(cmd.Cmd):
         return True
 
     def preloop(self) -> None:
-        self.journal = load_tasks(self.path)
+        journal = load_tasks(self.path)
+        self.journal = journal if journal is not None else list()
         return super().preloop()
 
     def postcmd(self, stop, line):
