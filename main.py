@@ -2,7 +2,7 @@ import cmd
 import datetime
 from collections import namedtuple
 from pathlib import Path
-from typing import List
+from typing import Dict
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -14,7 +14,7 @@ Task = namedtuple("Task", ("id", "title", "description", "status", "execution", 
 class BulletJournalShell(cmd.Cmd):
     intro = "Welcome to you bullet journal. Type help or ? to list commands.\n"
     prompt = "[bullet-journal] "
-    journal: List[Task] = list()
+    journal: dict
     path = Path("tasks.yaml")
 
     def do_add(self, line):
@@ -33,8 +33,7 @@ class BulletJournalShell(cmd.Cmd):
 
         task = Task(self.task_id, title, description, status, execution_date, creation_date)
         print(f"created {task}")
-        self.journal.append(task)
-        save_task(task, self.path)
+        self.journal[self.task_id] = task
         self.task_id += 1
 
     def do_list(self, line):
@@ -45,19 +44,19 @@ class BulletJournalShell(cmd.Cmd):
         today = datetime.date.today()
         match line.strip():
             case "today":
-                task_list = list(filter(lambda t: t.execution == today, self.journal))
+                journal = dict(filter(lambda t: t[1].execution == today, self.journal.items()))
 
             case "open":
-                task_list = list(filter(lambda t: t.status == 0, self.journal))
+                journal = dict(filter(lambda t: t[1].status == 0, self.journal.items()))
 
             case "closed":
-                task_list = list(filter(lambda t: t.status == 1, self.journal))
+                journal = dict(filter(lambda t: t[1].status == 1, self.journal.items()))
 
             case "all" | "":
-                task_list = self.journal
+                journal = self.journal
 
-        for task in task_list:
-            print(f"{task.id} | {task.title} | {task.creation}")
+        for tid, task in journal.items():
+            print(f"{tid} | {task.title} | {task.creation}")
 
     def do_close(self, line):
         return True
@@ -65,13 +64,17 @@ class BulletJournalShell(cmd.Cmd):
     def preloop(self) -> None:
         journal = load_tasks(self.path)
         if journal is None:
-            self.journal = list()
+            self.journal = dict()
             self.task_id = 0
         else:
             self.journal = journal
-            self.task_id = journal[-1].id + 1
+            self.task_id = max(journal.keys())
 
         return super().preloop()
+
+    def postloop(self) -> None:
+        save_tasks(self.journal, self.path)
+        return super().postloop()
 
     def postcmd(self, stop, line):
         # prints a new line after each command
@@ -79,14 +82,10 @@ class BulletJournalShell(cmd.Cmd):
         return cmd.Cmd.postcmd(self, stop, line)
 
 
-def save_tasks(task_list: List[Task], path: Path):
+def save_tasks(task_dict: Dict[int, Task], path: Path):
+    data = {tid: task._asdict() for tid, task in task_dict.items()}
     with path.open("w") as file:
-        dump(task_list, file, Dumper=Dumper)
-
-
-def save_task(task: Task, path: Path):
-    with path.open("a") as file:
-        dump([task._asdict()], file, Dumper=Dumper)
+        dump(data, file, Dumper=Dumper)
 
 
 def load_tasks(path: Path):
