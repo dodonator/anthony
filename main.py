@@ -3,7 +3,6 @@ import datetime
 from collections import namedtuple
 from pathlib import Path
 from typing import Dict
-from venv import create
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -95,11 +94,13 @@ def load_tasks(path: Path):
     if task_list:
         return _tasks_from_dict(task_list)
 
+
 def _tasks_from_dict(task_dict: Dict[int, Dict]) -> Dict[int, Task]:
     result = dict()
     for tid, t_dict in task_dict.items():
         result[tid] = Task(**t_dict)
     return result
+
 
 if __name__ == "__main__":
     BulletJournalShell().cmdloop()
