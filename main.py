@@ -8,7 +8,14 @@ from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
 from yaml import dump, load
 
-Task = namedtuple("Task", ("id", "title", "description", "status", "execution", "creation"))
+Task = namedtuple(
+    "Task",
+    ("id",
+    "title",
+    "description",
+    "status",
+    "execution",
+    "creation"))
 
 
 class BulletJournalShell(cmd.Cmd):
