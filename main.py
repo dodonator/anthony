@@ -48,6 +48,10 @@ class BulletJournalShell(cmd.Cmd):
         save_tasks(self.journal, self.path)
         return True
 
+    def preloop(self) -> None:
+        self.journal = load_tasks(self.path)
+        return super().preloop()
+
     def postcmd(self, stop, line):
         # prints a new line after each command
         print()
