@@ -37,6 +37,7 @@ class BulletJournalShell(cmd.Cmd):
         task = Task(self.task_id, title, description, status, creation_date)
         print(f"created {task}")
         self.journal.append(task)
+        save_task(task, self.path)
         self.task_id += 1
 
     def do_list(self, line):
@@ -45,7 +46,7 @@ class BulletJournalShell(cmd.Cmd):
             print(f"{task.id} | {task.title} | {task.creation}")
 
     def do_close(self, line):
-        save_tasks(self.journal, self.path)
+        # save_tasks(self.journal, self.path)
         return True
 
     def preloop(self) -> None:
@@ -62,6 +63,11 @@ class BulletJournalShell(cmd.Cmd):
 def save_tasks(task_list: List[Task], path: Path):
     with path.open("w") as file:
         dump(task_list, file, Dumper=Dumper)
+
+
+def save_task(task: Task, path: Path):
+    with path.open("a") as file:
+        dump([task], file, Dumper=Dumper)
 
 
 def load_tasks(path: Path):
