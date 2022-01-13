@@ -15,7 +15,6 @@ class BulletJournalShell(cmd.Cmd):
     intro = "Welcome to you bullet journal. Type help or ? to list commands.\n"
     prompt = "[bullet-journal] "
     journal: List[Task] = list()
-    task_id = 0
     path = Path("tasks.yaml")
 
     def do_add(self, line):
@@ -51,7 +50,13 @@ class BulletJournalShell(cmd.Cmd):
 
     def preloop(self) -> None:
         journal = load_tasks(self.path)
-        self.journal = journal if journal is not None else list()
+        if journal is None:
+            self.journal = list()
+            self.task_id = 0
+        else:
+            self.journal = journal
+            self.task_id = journal.pop().id + 1
+
         return super().preloop()
 
     def postcmd(self, stop, line):
