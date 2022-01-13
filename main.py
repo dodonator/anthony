@@ -3,6 +3,7 @@ import datetime
 from collections import namedtuple
 from pathlib import Path
 from typing import Dict
+from venv import create
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -68,7 +69,7 @@ class BulletJournalShell(cmd.Cmd):
             self.task_id = 0
         else:
             self.journal = journal
-            self.task_id = max(journal.keys())
+            self.task_id = max(journal.keys()) + 1
 
         return super().preloop()
 
@@ -91,8 +92,14 @@ def save_tasks(task_dict: Dict[int, Task], path: Path):
 def load_tasks(path: Path):
     with path.open("r") as file:
         task_list = load(file, Loader=Loader)
-    return task_list
+    if task_list:
+        return _tasks_from_dict(task_list)
 
+def _tasks_from_dict(task_dict: Dict[int, Dict]) -> Dict[int, Task]:
+    result = dict()
+    for tid, t_dict in task_dict.items():
+        result[tid] = Task(**t_dict)
+    return result
 
 if __name__ == "__main__":
     BulletJournalShell().cmdloop()
