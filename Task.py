@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import datetime
+from uuid import uuid4
 
 
 class Task:
-    task_id: int
+    task_id: str
     title: str
     content: str
     done: bool
@@ -19,6 +20,7 @@ class Task:
         active=True,
         execution_date=None,
     ):
+        self.task_id = uuid4().hex
         self.title = title
         self.content = content
         self.done = done
@@ -45,5 +47,14 @@ class Task:
     @staticmethod
     def from_dict(task_dict: dict) -> Task:
         """Generates Task from dict."""
-        task = Task()
+        task_id = task_dict.get("task_id")
+        title = task_dict.get("title", "")
+        content = task_dict.get("content", "")
+        done = task_dict.get("done", False)
+        active = task_dict.get("active", True)
+        execution_date = task_dict.get("execution_date", None)
+
+        task = Task(title, content, done, active, execution_date)
+        task.task_id = task_id
+
         return task
