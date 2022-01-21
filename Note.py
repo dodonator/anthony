@@ -21,7 +21,7 @@ class Note:
         """Returns Note as dict."""
 
         note_dict = dict()
-        note_dict["task_id"] = self.note_id
+        note_dict["note_id"] = self.note_id
         note_dict["title"] = self.title
         note_dict["content"] = self.content
 

@@ -25,6 +25,7 @@ class Appointment:
     def to_dict(self) -> dict:
         """Returns Appointment as dict."""
         appointment_dict = dict()
+        appointment_dict["appointment_id"] = self.appointment_id
         appointment_dict["title"] = self.title
         appointment_dict["content"] = self.content
         appointment_dict["start"] = self.start
