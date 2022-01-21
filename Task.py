@@ -19,7 +19,8 @@ class Task:
         done=False,
         active=True,
         execution_date=None,
-    ):
+    ) -> None:
+
         self.task_id = uuid4().hex
         self.title = title
         self.content = content
