@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Iterable
 
-from Job import Job
+from Task import Task
 
 
 class BulletJournal:
