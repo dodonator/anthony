@@ -30,7 +30,7 @@ class Appointment:
         appointment_dict["start"] = self.start
         return appointment_dict
 
-    @classmethod
+    @staticmethod
     def from_dict(appointment_dict: dict) -> Appointment:
         """Generates Appointment from dict."""
         appointment_id = appointment_dict.get("appointment_id")
