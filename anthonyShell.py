@@ -24,7 +24,7 @@ Type help or ? to list commands.
 
     def do_info(self, line):
         """Prints info concerning the current working directory."""
-        print(f"source path: {self.source_path}")
+        print(f"source path: {self.source_path.absolute()}")
         print(f"current page: {self.current_page}")
         print(f"current page (path): {self.current_path}")
 
