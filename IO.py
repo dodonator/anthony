@@ -50,6 +50,14 @@ def load_page(path: Path) -> Page:
     return page
 
 
+def generate_path_from_page(source_path: Path, page: Page) -> Path:
+    """Generates a path to a page given a source path."""
+    date = page.date
+    year = date.year
+    path = source_path / Path(str(year)) / Path(f"{date.isoformat()}.yaml")
+    return path
+
+
 def initialize_page(source_path: Path) -> Tuple[Page, Path]:
     """Initialize the page for current date."""
 
