@@ -1,4 +1,5 @@
 import cmd
+import sys
 
 
 class AnthonyShell(cmd.Cmd):
@@ -9,6 +10,10 @@ Type help or ? to list commands.
     prompt = "[anthony] "
 
     # ToDo: implement commands
+
+    def do_exit(self, line):
+        """Exits the programm."""
+        sys.exit()
 
 
 if __name__ == "__main__":

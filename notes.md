@@ -63,6 +63,7 @@ class Page:
 * add [appointment, note, task] - Fügt ein neues Item der aktuellen Page hinzu.
 * list [appontment, note, task, _] - Listet alle Items eines Typs oder alle Items der aktuellen Page auf.
 * export [path] - Exportiert die aktuelle Page als markdown Datei.
+* exit - Beendet das Programm
 
 ### Task Actions
 
