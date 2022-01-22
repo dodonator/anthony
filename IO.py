@@ -55,3 +55,29 @@ def load_last_page(path: Path) -> Page:
     page_files.sort(key=lambda p: p.stem)
     last_path = page_files.pop()
     return load_page(last_path)
+
+
+def initialize_page(source_path: Path):
+    today = datetime.date.today()
+
+    last_page = load_last_page(source_path)
+
+    if last_page.date != today:
+        # load active tasks
+        old_tasks = [task for task in last_page.tasks() if task.active]
+
+        # create new page
+        page = Page(today)
+
+        # add old tasks to page
+        for task in old_tasks:
+            page.add(task)
+
+        # create path for page
+        page_path = source_path / Path(f"{page.date.isoformat()}.yaml")
+        page_path.touch()
+
+        # save page to path
+        save_page(page_path, page)
+    else:
+        page = last_page
