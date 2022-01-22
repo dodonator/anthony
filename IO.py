@@ -6,7 +6,7 @@ from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
 from yaml import dump, load
 
-from Page import Appointment, Note, Page, Task
+from Page import Page
 
 source_path = Path("journal")
 
