@@ -81,3 +81,5 @@ def initialize_page(source_path: Path):
         save_page(page_path, page)
     else:
         page = last_page
+
+    return page
