@@ -2,7 +2,7 @@ import datetime
 from pathlib import Path
 from pprint import pprint
 
-from IO import load_last_page, load_page, save_page
+from IO import load_last_page, save_page
 from Page import Page
 
 
