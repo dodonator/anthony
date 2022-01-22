@@ -48,3 +48,25 @@ class Page:
     date: datetime.date  # date of the page
     entries: list  # List[Appointment | Note | Task]
 ```
+
+## CLI commands
+
+* add [appointment, note, task] - Fügt ein neues Item der aktuellen Page hinzu.
+* list [appontment, note, task, _] - Listet alle Items eines Typs oder alle Items der aktuellen Page auf.
+* export [path] - Exportiert die aktuelle Page als markdown Datei.
+
+### Task Actions
+
+Die folgenden Aktionen können auf Tasks der aktuellen Page ausgeführt werden. Jede Aktion ist dabei auch als command vorhanden.
+
+* complete task
+  Der Task wird beendet ( `done = True` , `active = False` ). Ein Karma Punkt wird generiert.
+
+* cancel task
+  Der Task wird abgebrochen ( `done = False` , `active = False` ) und an späteren Tagen nicht mehr angezeigt. Ein Karma Punkt wird abgezogen.
+
+* move task
+  Der Task wird verschoben ( `done = True` , `active = True` ). Der Task kann somit am aktuellen Tag nicht mehr vollendet werden. Da der Task als `active` markiert ist, wird er am nächsten Tag wieder geladen werden. Ein Karma Punkt wird abgezogen.
+
+* repeat task [date]
+  Der Task wird wiederholt (sofern er abgeschlossen oder abgebrochen ist). Standartmäßig wird der Task am folgenden Tag als offen ( `done = False` , `active = True` ) angezeigt. Alternativ kann das Datum angegeben werden, zu dem der Task wiederholt werden soll.
