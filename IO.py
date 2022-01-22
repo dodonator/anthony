@@ -2,9 +2,9 @@ import datetime
 from pathlib import Path
 from pprint import pprint
 
-# from yaml import CLoader as Loader
 from yaml import CDumper as Dumper
-from yaml import dump
+from yaml import CLoader as Loader
+from yaml import dump, load
 
 from Page import Appointment, Note, Page, Task
 
@@ -34,6 +34,14 @@ def save_page(path: Path, page: Page):
         dump(page_dict, file, Dumper=Dumper)
 
 
+def load_page(path: Path) -> Page:
+    with path.open("r") as file:
+        page_dict = load(file, Loader=Loader)
+
+    page = Page.from_dict(page_dict)
+    return page
+
+
 date = datetime.date.today()
 page = Page(date)
 path = Path(f"{date.isoformat()}.yaml")
@@ -50,6 +58,7 @@ page.add(appointment)
 page.add(note)
 page.add(task)
 
-pprint(page.to_dict())
-
 save_page(path, page)
+pprint(page.to_dict())
+print()
+pprint(load_page(path).to_dict())
