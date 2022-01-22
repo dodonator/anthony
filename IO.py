@@ -8,22 +8,21 @@ from yaml import dump, load
 
 from Page import Page
 
-source_path = Path("journal")
-
 
 def init_dir(path: Path):
-
+    """Initialize source directory."""
     if not path.exists():
         path.mkdir()
 
     year = datetime.date.today().year
-    year_path = source_path / str(year)
+    year_path = path / str(year)
 
     if not year_path.exists():
         year_path.mkdir()
 
 
 def extract_page_files(path: Path):
+    """Extracts paths to pages from given path."""
     yaml_files = path.glob("**/*.yaml")
     page_files = list()
     for path in yaml_files:
@@ -35,12 +34,14 @@ def extract_page_files(path: Path):
 
 
 def save_page(path: Path, page: Page):
+    """Saves a page to a given path."""
     page_dict = page.to_dict()
     with path.open("w") as file:
         dump(page_dict, file, Dumper=Dumper)
 
 
 def load_page(path: Path) -> Page:
+    """Loads a page from a given path."""
     with path.open("r") as file:
         page_dict = load(file, Loader=Loader)
 
