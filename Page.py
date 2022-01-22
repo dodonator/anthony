@@ -74,5 +74,5 @@ class Page:
             else:
                 continue
 
-            page.entries.append(element, element_type)
+            page.entries.append((element, element_type))
         return page
