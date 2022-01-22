@@ -50,19 +50,13 @@ def load_page(path: Path) -> Page:
     return page
 
 
-def load_last_page(path: Path) -> Tuple[Page, Path]:
-    """Returns the chronologically last page."""
-    page_files = extract_page_files(path)
-    page_files.sort(key=lambda p: p.stem)
-    last_path = page_files.pop()
-    page = load_page(last_path)
-    return page, last_path
-
-
 def initialize_page(source_path: Path) -> Tuple[Page, Path]:
     today = datetime.date.today()
 
-    last_page, last_path = load_last_page(source_path)
+    page_files = extract_page_files(source_path)
+    page_files.sort(key=lambda p: p.stem)
+    last_path = page_files.pop()
+    last_page = load_page(last_path)
 
     if last_page.date != today:
         # load active tasks
