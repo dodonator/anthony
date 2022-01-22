@@ -1,6 +1,6 @@
 import datetime
+import re
 from pathlib import Path
-from pprint import pprint
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -23,9 +23,15 @@ def init_dir(path: Path):
         year_path.mkdir()
 
 
-def extract_yaml_files(path: Path):
-    yaml_files = list(source_path.glob("**/*.yaml"))
-    return yaml_files
+def extract_page_files(path: Path):
+    yaml_files = path.glob("**/*.yaml")
+    page_files = list()
+    for path in yaml_files:
+        stem = path.stem
+        match = re.match(r"\d{4}-\d{2}-\d{2}", stem)
+        if match:
+            page_files.append(path)
+    return page_files
 
 
 def save_page(path: Path, page: Page):
@@ -40,25 +46,3 @@ def load_page(path: Path) -> Page:
 
     page = Page.from_dict(page_dict)
     return page
-
-
-date = datetime.date.today()
-page = Page(date)
-path = Path(f"{date.isoformat()}.yaml")
-
-appointment = Appointment(
-    "Freitagsfoo",
-    "Freitagsfoo",
-    datetime.date(2022, 1, 21),
-)
-task = Task("Aufgabe", "dinge tun")
-note = Note("Notiz", "dinge aufschreiben")
-
-page.add(appointment)
-page.add(note)
-page.add(task)
-
-save_page(path, page)
-pprint(page.to_dict())
-print()
-pprint(load_page(path).to_dict())
