@@ -17,6 +17,9 @@ class Note:
         self.title = title
         self.content = content
 
+    def __str__(self) -> str:
+        return f"Note({self.title})"
+
     def to_dict(self) -> Note:
         """Returns Note as dict."""
 

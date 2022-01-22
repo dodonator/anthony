@@ -22,6 +22,9 @@ class Appointment:
         self.content = content
         self.start = start
 
+    def __str__(self) -> str:
+        return f"Appointment({self.title}, {self.start})"
+
     def to_dict(self) -> dict:
         """Returns Appointment as dict."""
         appointment_dict = dict()

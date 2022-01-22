@@ -20,6 +20,9 @@ class Page:
         for element in self.entries:
             yield element
 
+    def __str__(self) -> str:
+        return f"Page({self.date})"
+
     def add(self, element):
         """Adds an element."""
         if isinstance(element, Appointment):
