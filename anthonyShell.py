@@ -2,7 +2,10 @@ import cmd
 
 
 class AnthonyShell(cmd.Cmd):
-    intro = "Welcome to anthony your bullet journal. Type help or ? to list commands.\n"
+    intro = """
+Welcome to anthony your bullet journal.
+Type help or ? to list commands.
+"""
     prompt = "[anthony] "
 
     # ToDo: implement commands
