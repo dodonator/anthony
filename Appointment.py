@@ -38,9 +38,9 @@ class Appointment:
     def from_dict(appointment_dict: dict) -> Appointment:
         """Generates Appointment from dict."""
         appointment_id = appointment_dict.get("appointment_id")
-        title = appointment_dict.get("title")
-        content = appointment_dict.get("content")
-        start = appointment_dict.get("start")
+        title: str = appointment_dict.get("title")
+        content: str = appointment_dict.get("content")
+        start: datetime.datetime = appointment_dict.get("start")
 
         appointment = Appointment(title, content, start)
         appointment.appointment_id = appointment_id

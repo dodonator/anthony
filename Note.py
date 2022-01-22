@@ -20,7 +20,7 @@ class Note:
     def __str__(self) -> str:
         return f"Note({self.title})"
 
-    def to_dict(self) -> Note:
+    def to_dict(self) -> dict:
         """Returns Note as dict."""
 
         note_dict = dict()
@@ -33,9 +33,9 @@ class Note:
     @staticmethod
     def from_dict(note_dict: dict) -> Note:
         """Generates Note from dict."""
-        note_id = note_dict.get("note_id")
-        title = note_dict.get("title")
-        content = note_dict.get("content")
+        note_id: str = note_dict.get("note_id")
+        title: str = note_dict.get("title")
+        content: str = note_dict.get("content")
 
         note = Note(title, content)
         note.note_id = note_id

@@ -35,7 +35,7 @@ class Task:
     def __str__(self) -> str:
         return f"Task({self.title}, {self.execution_date})"
 
-    def to_dict(self) -> Task:
+    def to_dict(self) -> dict:
         """Returns Task as dict."""
 
         task_dict = dict()
