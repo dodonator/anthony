@@ -75,7 +75,8 @@ def initialize_page(source_path: Path) -> Tuple[Page, Path]:
             page = Page(today)
 
             # create path for page
-            path = source_path / Path(f"{page.date.isoformat()}.yaml")
+            year = page.date.year
+            path = source_path / Path(str(year)) / Path(f"{page.date.isoformat()}.yaml")
             path.touch()
 
             # load active tasks
@@ -96,7 +97,8 @@ def initialize_page(source_path: Path) -> Tuple[Page, Path]:
         page = Page(today)
 
         # create path for page
-        path = source_path / Path(f"{page.date.isoformat()}.yaml")
+        year = page.date.year
+        path = source_path / Path(str(year)) / Path(f"{page.date.isoformat()}.yaml")
         path.touch()
 
         # save page to path
