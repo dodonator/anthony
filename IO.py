@@ -1,6 +1,7 @@
 import datetime
 import re
 from pathlib import Path
+from typing import Tuple
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -49,18 +50,19 @@ def load_page(path: Path) -> Page:
     return page
 
 
-def load_last_page(path: Path) -> Page:
+def load_last_page(path: Path) -> Tuple[Page, Path]:
     """Returns the chronologically last page."""
     page_files = extract_page_files(path)
     page_files.sort(key=lambda p: p.stem)
     last_path = page_files.pop()
-    return load_page(last_path)
+    page = load_page(last_path)
+    return page, last_path
 
 
-def initialize_page(source_path: Path) -> Page:
+def initialize_page(source_path: Path) -> Tuple[Page, Path]:
     today = datetime.date.today()
 
-    last_page = load_last_page(source_path)
+    last_page, last_path = load_last_page(source_path)
 
     if last_page.date != today:
         # load active tasks
@@ -74,12 +76,13 @@ def initialize_page(source_path: Path) -> Page:
             page.add(task)
 
         # create path for page
-        page_path = source_path / Path(f"{page.date.isoformat()}.yaml")
-        page_path.touch()
+        path = source_path / Path(f"{page.date.isoformat()}.yaml")
+        path.touch()
 
         # save page to path
-        save_page(page_path, page)
+        save_page(path, page)
     else:
         page = last_page
+        page = last_path
 
-    return page
+    return page, path
