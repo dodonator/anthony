@@ -57,7 +57,7 @@ def load_last_page(path: Path) -> Page:
     return load_page(last_path)
 
 
-def initialize_page(source_path: Path):
+def initialize_page(source_path: Path) -> Page:
     today = datetime.date.today()
 
     last_page = load_last_page(source_path)
