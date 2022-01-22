@@ -51,30 +51,40 @@ def load_page(path: Path) -> Page:
 
 
 def initialize_page(source_path: Path) -> Tuple[Page, Path]:
+    """Initialize the page for current date."""
+
     today = datetime.date.today()
 
+    # extract all page files
     page_files = extract_page_files(source_path)
+
+    # sort page files chronologically
     page_files.sort(key=lambda p: p.stem)
+
+    # get path to last page file
     last_path = page_files.pop()
+
+    # load last page
     last_page = load_page(last_path)
 
     if last_page.date != today:
-        # load active tasks
-        old_tasks = [task for task in last_page.tasks() if task.active]
-
         # create new page
         page = Page(today)
-
-        # add old tasks to page
-        for task in old_tasks:
-            page.add(task)
 
         # create path for page
         path = source_path / Path(f"{page.date.isoformat()}.yaml")
         path.touch()
 
+        # load active tasks
+        old_tasks = [task for task in last_page.tasks() if task.active]
+
+        # add old tasks to page
+        for task in old_tasks:
+            page.add(task)
+
         # save page to path
         save_page(path, page)
+
     else:
         page = last_page
         page = last_path
