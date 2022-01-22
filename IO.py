@@ -46,3 +46,11 @@ def load_page(path: Path) -> Page:
 
     page = Page.from_dict(page_dict)
     return page
+
+
+def load_last_page(path: Path) -> Page:
+    """Returns the chronologically last page."""
+    page_files = extract_page_files(path)
+    page_files.sort(key=lambda p: p.stem)
+    last_path = page_files.pop()
+    return load_page(last_path)
