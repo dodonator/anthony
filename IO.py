@@ -2,11 +2,11 @@ import datetime
 from pathlib import Path
 from pprint import pprint
 
+# from yaml import CLoader as Loader
 from yaml import CDumper as Dumper
-from yaml import CLoader as Loader
-from yaml import dump, load
+from yaml import dump
 
-from Day import Appointment, Day, Note, Task
+from Page import Appointment, Note, Page, Task
 
 source_path = Path("journal")
 
@@ -28,24 +28,28 @@ def extract_yaml_files(path: Path):
     return yaml_files
 
 
-def save_day(path: Path, day: Day):
-    day_dict = day.to_dict()
+def save_page(path: Path, page: Page):
+    page_dict = page.to_dict()
     with path.open("w") as file:
-        dump(day_dict, file, Dumper=Dumper)
+        dump(page_dict, file, Dumper=Dumper)
 
 
 date = datetime.date.today()
-day = Day(date)
+page = Page(date)
 path = Path(f"{date.isoformat()}.yaml")
 
-appointment = Appointment("Freitagsfoo", "Freitagsfoo", datetime.date(2022, 1, 21))
+appointment = Appointment(
+    "Freitagsfoo",
+    "Freitagsfoo",
+    datetime.date(2022, 1, 21),
+)
 task = Task("Aufgabe", "dinge tun")
 note = Note("Notiz", "dinge aufschreiben")
 
-day.add(appointment)
-day.add(note)
-day.add(task)
+page.add(appointment)
+page.add(note)
+page.add(task)
 
-pprint(day.to_dict())
+pprint(page.to_dict())
 
-save_day(path, day)
+save_page(path, page)
