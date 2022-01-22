@@ -39,6 +39,15 @@ class Task:
     execution_date: datetime.date  # date the task should be executed
 ```
 
+### Task status
+
+Ein Task besitzt zwei flags: `done` , welches angibt, ob ein Task erledigt wurde und `active` , welches angibt, ob ein Task an dem aktuellen Tag respektive auf der aktuellen Seite noch erledigt werden kann. Aus der Kombination dieser beiden Werte ergibt sich der Status eines Tasks. Nur Tasks, welche als `active` markiert sind werden auf die nächste Page übernommen.
+
+|              | done=True | done=False |
+|--------------|-----------|------------|
+| active=True  | moved     | open       |
+| active=False | completed | cancelled  |
+
 ## Pages
 
 Eine Page betrachtet einen Tag und beinhaltet alle Termine, Notizen und Aufgaben, die an diesem Tag anfallen.
