@@ -2,7 +2,7 @@ import cmd
 import sys
 from pathlib import Path
 
-from IO import init_dir, initialize_page
+from IO import init_dir, initialize_page, save_page
 from Page import Page
 
 
@@ -37,6 +37,7 @@ Type help or ? to list commands.
 
     def postcmd(self, stop: bool, line: str) -> bool:
         print()
+        save_page(self.current_path, self.current_page)
         return super().postcmd(stop, line)
 
 
