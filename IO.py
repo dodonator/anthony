@@ -66,11 +66,10 @@ def initialize_page(source_path: Path) -> Tuple[Page, Path]:
     # extract all page files
     page_files = extract_page_files(source_path)
 
-    # sort page files chronologically
-    page_files.sort(key=lambda p: p.stem)
-
     # check if there are any page files
     if page_files:
+        # sort page files chronologically
+        page_files.sort(key=lambda p: p.stem)
 
         # get path to last page file
         last_path = page_files.pop()
@@ -83,8 +82,7 @@ def initialize_page(source_path: Path) -> Tuple[Page, Path]:
             page = Page(today)
 
             # create path for page
-            year = page.date.year
-            path = source_path / Path(str(year)) / Path(f"{page.date.isoformat()}.yaml")
+            path = generate_path_from_page(source_path, page)
             path.touch()
 
             # load active tasks
@@ -99,14 +97,13 @@ def initialize_page(source_path: Path) -> Tuple[Page, Path]:
 
         else:
             page = last_page
-            page = last_path
+            path = last_path
     else:
         # create new page
         page = Page(today)
 
         # create path for page
-        year = page.date.year
-        path = source_path / Path(str(year)) / Path(f"{page.date.isoformat()}.yaml")
+        path = path = generate_path_from_page(source_path, page)
         path.touch()
 
         # save page to path
