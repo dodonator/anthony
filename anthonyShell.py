@@ -18,6 +18,27 @@ Type help or ? to list commands.
 
     # ToDo: implement commands
 
+    def do_add(self, line):
+        """Adds Appointment, Note or Task to current Page."""
+        tmp = line.split(" ")
+        element_type = str.capitalize(tmp[0])
+        element = tmp[1:]
+
+        if element_type == "Appointment":
+            # ToDo:
+            # parse_appointment(element)
+            pass
+        elif element_type == "Note":
+            # ToDo:
+            # parse_note(element)
+            pass
+        elif element_type == "Task":
+            # ToDo:
+            # parse_task(element)
+            pass
+        else:
+            raise NotImplementedError(f"Unknown element type: {element_type}")
+
     def do_exit(self, line):
         """Exits the programm."""
         sys.exit()
