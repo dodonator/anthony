@@ -24,7 +24,8 @@ Type help or ? to list commands.
         """
         Adds Appointment, Note or Task to current Page.
         Usage:
-            add Appointment <title>, [<content>], start_date (%Y-%m-%d)
+            add Appointment <title>, [<content>], start_date (YYYY-MM-DD[*HH:MM])
+            add Note <title>, [<content>]
         """
         tmp = line.split(" ")
         element_type = str.capitalize(tmp[0])
