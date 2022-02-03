@@ -41,3 +41,18 @@ class Note:
         note.note_id = note_id
 
         return note
+
+
+def parse_note(line: str) -> Note:
+    """
+    Parses an note from an comma seperated string.
+    'title, [content]'
+    """
+    if "," in line:
+        title, content = line.split(",")
+        content = content.lstrip()
+    else:
+        title = line
+        content = ""
+    note = Note(title, content)
+    return note

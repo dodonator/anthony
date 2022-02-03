@@ -4,6 +4,7 @@ from pathlib import Path
 
 from Appointment import parse_appointment
 from IO import init_dir, initialize_page, save_page
+from Note import parse_note
 from Page import Page
 
 
@@ -35,9 +36,10 @@ Type help or ? to list commands.
             print(f"Added Appointment: {appointment}")
 
         elif element_type == "Note":
-            # ToDo:
-            # parse_note(element)
-            pass
+            note = parse_note(element)
+            self.current_page.add(note)
+            print(f"Added Note: {note}")
+
         elif element_type == "Task":
             # ToDo:
             # parse_task(element)
