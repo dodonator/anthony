@@ -20,7 +20,10 @@ Type help or ? to list commands.
     # ToDo: implement commands
 
     def do_add(self, line):
-        """Adds Appointment, Note or Task to current Page."""
+        """
+        Adds Appointment, Note or Task to current Page.
+        Usage:
+            add Appointment <title>, [<content>], start_date (%Y-%m-%d)"""
         tmp = line.split(" ")
         element_type = str.capitalize(tmp[0])
         element = "".join(tmp[1:])
