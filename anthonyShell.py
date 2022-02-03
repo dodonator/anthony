@@ -27,9 +27,9 @@ Type help or ? to list commands.
             add Appointment <title>, [<content>], start_date (YYYY-MM-DD[*HH:MM])
             add Note <title>, [<content>]
         """
-        tmp = line.split(" ")
-        element_type = str.capitalize(tmp[0])
-        element = "".join(tmp[1:])
+        tmp = line.index(" ")
+        element_type = str.capitalize(line[:tmp])
+        element = line[tmp:]
 
         if element_type == "Appointment":
             appointment = parse_appointment(element)

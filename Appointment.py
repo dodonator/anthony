@@ -65,7 +65,6 @@ def parse_appointment(line: str) -> Appointment:
 
     start_iso = start_iso.lstrip()
     content = content.lstrip()
-    start_date = datetime.datetime.strptime(start_iso, "%Y-%m-%d")
-
+    start_date = datetime.datetime.fromisoformat(start_iso)
     appointment = Appointment(title, content, start_date)
     return appointment
