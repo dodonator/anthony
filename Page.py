@@ -32,7 +32,7 @@ class Page:
         elif isinstance(element, Task):
             element_type = "Task"
         else:
-            raise NotImplemented(f"Unknown element type {type(element)}")
+            raise NotImplementedError(f"Unknown element type {type(element)}")
 
         self.entries.append((element, element_type))
 
