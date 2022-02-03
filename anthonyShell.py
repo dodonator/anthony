@@ -19,7 +19,7 @@ Type help or ? to list commands.
     current_page: Page
     current_path: Path
 
-    # ToDo: implement commands
+    # ToDo: implement delete command
 
     def do_add(self, line):
         """
