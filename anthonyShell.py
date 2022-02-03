@@ -23,7 +23,8 @@ Type help or ? to list commands.
         """
         Adds Appointment, Note or Task to current Page.
         Usage:
-            add Appointment <title>, [<content>], start_date (%Y-%m-%d)"""
+            add Appointment <title>, [<content>], start_date (%Y-%m-%d)
+        """
         tmp = line.split(" ")
         element_type = str.capitalize(tmp[0])
         element = "".join(tmp[1:])
@@ -43,6 +44,23 @@ Type help or ? to list commands.
             pass
         else:
             raise NotImplementedError(f"Unknown element type: {element_type}")
+
+    def do_list(self, line):
+        """List all items on current page."""
+        print("Appointments:")
+        for appo in self.current_page.appointments():
+            print(f"\t{appo}")
+        print()
+
+        print("Notes:")
+        for note in self.current_page.notes():
+            print(f"\t{note}")
+        print()
+
+        print("Tasks:")
+        for task in self.current_page.tasks():
+            print(f"\t{task}")
+        print()
 
     def do_exit(self, line):
         """Exits the programm."""
