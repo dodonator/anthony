@@ -2,6 +2,7 @@ import cmd
 import sys
 from pathlib import Path
 
+from Appointment import parse_appointment
 from IO import init_dir, initialize_page, save_page
 from Page import Page
 
@@ -22,12 +23,13 @@ Type help or ? to list commands.
         """Adds Appointment, Note or Task to current Page."""
         tmp = line.split(" ")
         element_type = str.capitalize(tmp[0])
-        element = tmp[1:]
+        element = "".join(tmp[1:])
 
         if element_type == "Appointment":
-            # ToDo:
-            # parse_appointment(element)
-            pass
+            appointment = parse_appointment(element)
+            self.current_page.add(appointment)
+            print(f"Added Appointment: {appointment}")
+
         elif element_type == "Note":
             # ToDo:
             # parse_note(element)
