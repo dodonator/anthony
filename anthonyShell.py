@@ -6,6 +6,7 @@ from Appointment import parse_appointment
 from IO import init_dir, initialize_page, save_page
 from Note import parse_note
 from Page import Page
+from Task import parse_task
 
 
 class AnthonyShell(cmd.Cmd):
@@ -26,6 +27,7 @@ Type help or ? to list commands.
         Usage:
             add Appointment <title>, [<content>], start_date (YYYY-MM-DD[*HH:MM])
             add Note <title>, [<content>]
+            add Task <title>, [<content>], [<done>], [<active>], [<execution_date>]
         """
         tmp = line.index(" ")
         element_type = str.capitalize(line[:tmp])
@@ -42,9 +44,9 @@ Type help or ? to list commands.
             print(f"Added Note: {note}")
 
         elif element_type == "Task":
-            # ToDo:
-            # parse_task(element)
-            pass
+            task = parse_task(element)
+            self.current_page.add(task)
+            print(f"Added Task: {task}")
         else:
             raise NotImplementedError(f"Unknown element type: {element_type}")
 
