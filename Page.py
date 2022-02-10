@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Iterator
+from typing import Iterator, List
 
 from Appointment import Appointment
 from Note import Note
@@ -10,14 +10,14 @@ from Task import Task
 
 class Page:
     date: datetime.date
-    entries: list
+    items: List[Appointment | Note | Task]
 
     def __init__(self, date: datetime.date) -> None:
         self.date = date
-        self.entries = list()
+        self.items = list()
 
     def __iter__(self) -> Iterator:
-        for element in self.entries:
+        for element in self.items:
             yield element
 
     def __str__(self) -> str:
@@ -34,23 +34,23 @@ class Page:
         else:
             raise NotImplementedError(f"Unknown element type {type(element)}")
 
-        self.entries.append((element, element_type))
+        self.items.append((element, element_type))
 
     def appointments(self) -> Iterator[Appointment]:
         """Returns all appointments."""
-        for element, element_type in self.entries:
+        for element, element_type in self.items:
             if element_type == "Appointment":
                 yield element
 
     def notes(self) -> Iterator[Note]:
         """Returns all notes."""
-        for element, element_type in self.entries:
+        for element, element_type in self.items:
             if element_type == "Note":
                 yield element
 
     def tasks(self) -> Iterator[Task]:
         """Returns all Tasks."""
-        for element, element_type in self.entries:
+        for element, element_type in self.items:
             if element_type == "Task":
                 yield element
 
@@ -58,8 +58,8 @@ class Page:
         """Returns Page as a dict."""
         page_dict = dict()
         page_dict["date"] = self.date
-        entries = [(e.to_dict(), e_type) for (e, e_type) in self.entries]
-        page_dict["entries"] = entries
+        items = [(i.to_dict(), i_type) for (i, i_type) in self.items]
+        page_dict["items"] = items
         return page_dict
 
     @staticmethod
@@ -68,16 +68,16 @@ class Page:
         date = page_dict.get("date")
         page = Page(date)
 
-        entries = page_dict.get("entries")
-        for element_dict, element_type in entries:
-            if element_type == "Appointment":
-                element = Appointment.from_dict(element_dict)
-            elif element_type == "Note":
-                element = Note.from_dict(element_dict)
-            elif element_type == "Task":
-                element = Task.from_dict(element_dict)
+        items = page_dict.get("items")
+        for item_dict, item_type in items:
+            if item_type == "Appointment":
+                item = Appointment.from_dict(item_dict)
+            elif item_type == "Note":
+                item = Note.from_dict(item_dict)
+            elif item_type == "Task":
+                item = Task.from_dict(item_dict)
             else:
                 continue
 
-            page.entries.append((element, element_type))
+            page.items.append((item, item_type))
         return page
