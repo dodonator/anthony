@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Iterator, List
+from typing import Iterator, List, Tuple
 
 from Appointment import Appointment
 from Note import Note
@@ -10,7 +10,7 @@ from Task import Task
 
 class Page:
     date: datetime.date
-    items: List[Appointment | Note | Task]
+    items: List[Tuple[Appointment | Note | Task], str]
 
     def __init__(self, date: datetime.date) -> None:
         self.date = date
