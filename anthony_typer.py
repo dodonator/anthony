@@ -1,9 +1,11 @@
+import datetime
 from pathlib import Path
 
 import typer
 
 from IO import init_dir, initialize_page, save_page
 from Note import Note
+from Task import Task
 
 source_path = Path("./source/")
 
@@ -23,7 +25,15 @@ def add(item_type: str):
         typer.echo(f"added {note}")
 
     elif item_type == "task":
-        pass
+        title = typer.prompt("title: ")
+        content = typer.prompt("content: ")
+        done = typer.confirm("done? ")
+        active = typer.confirm("active? ")
+        execution_date_iso = typer.prompt("execution date (ISO): ")
+        execution_date = datetime.date.fromisoformat(execution_date_iso)
+        task = Task(title, content, done, active, execution_date)
+        page.add(task)
+        typer.echo(f"added {task}")
 
     else:
         pass
@@ -44,10 +54,10 @@ def list(item_type: str = ""):
         items = page.tasks()
 
     else:
-        items = list(page)
+        items = [i[0] for i in page.items]
 
     for item in items:
-        typer.echo(item)
+        print(item)
 
 
 @app.command()
