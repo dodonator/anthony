@@ -58,7 +58,7 @@ class Page:
         """Returns Page as a dict."""
         page_dict = dict()
         page_dict["date"] = self.date
-        items = [(i.to_dict(), i_type) for (i, i_type) in self.items]
+        items = [[i.to_dict(), i_type] for (i, i_type) in self.items]
         page_dict["items"] = items
         return page_dict
 
@@ -79,5 +79,5 @@ class Page:
             else:
                 continue
 
-            page.items.append((item, item_type))
+            page.items.append([item, item_type])
         return page
