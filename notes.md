@@ -61,9 +61,10 @@ class Page:
 ## CLI commands
 
 * add [appointment, note, task] - Fügt ein neues Item der aktuellen Page hinzu.
-* list [appontment, note, task, _] - Listet alle Items eines Typs oder alle Items der aktuellen Page auf.
-* export [path] - Exportiert die aktuelle Page als markdown Datei.
 * exit - Beendet das Programm
+* export [path] - Exportiert die aktuelle Page als markdown Datei.
+* list [appontment, note, task, _] - Listet alle Items eines Typs oder alle Items der aktuellen Page auf.
+* show [title] - Liefert genauere Informationen zu einem Item.
 
 ### Task Actions
 
