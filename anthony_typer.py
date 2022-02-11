@@ -3,6 +3,7 @@ from pathlib import Path
 
 import typer
 
+from Appointment import Appointment
 from IO import init_dir, initialize_page, save_page
 from Note import Note
 from Task import Task
@@ -15,7 +16,13 @@ app = typer.Typer()
 @app.command()
 def add(item_type: str):
     if item_type == "appointment":
-        pass
+        title: str = typer.prompt("title")
+        content: str = typer.prompt("content")
+        start_iso: str = typer.prompt("start")
+        start: datetime.datetime = datetime.datetime.fromisoformat(start_iso)
+        appointment = Appointment(title, content, start)
+        page.add(appointment)
+        typer.echo(f"added {appointment}")
 
     elif item_type == "note":
         title = typer.prompt("title")
