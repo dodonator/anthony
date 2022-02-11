@@ -68,6 +68,13 @@ def list(item_type: str = ""):
 
 
 @app.command()
+def show(title: str):
+    result = page.find(title)
+    if result is not None:
+        typer.echo(result)
+
+
+@app.command()
 def delete(title: str):
     pass
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Iterator, List, Tuple
+from typing import Iterator, List
 
 from Appointment import Appointment
 from Note import Note
@@ -10,7 +10,7 @@ from Task import Task
 
 class Page:
     date: datetime.date
-    items: List[Tuple[Appointment | Note | Task], str]
+    items: List[List[Appointment | Note | Task], str]
 
     def __init__(self, date: datetime.date) -> None:
         self.date = date
@@ -53,6 +53,13 @@ class Page:
         for element, element_type in self.items:
             if element_type == "Task":
                 yield element
+
+    def find(self, title: str) -> Appointment | Note | Task:
+        for item, item_type in self.items:
+            if item.title == title:
+                return item
+
+        return None
 
     def to_dict(self) -> dict:
         """Returns Page as a dict."""
