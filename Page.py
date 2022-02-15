@@ -4,27 +4,29 @@ import datetime
 from typing import Iterator, List
 
 from Appointment import Appointment
+from Item import Item
 from Note import Note
 from Task import Task
 
 
 class Page:
     date: datetime.date
-    items: List[List[Appointment | Note | Task], str]
+    items: List[List[Item], str]
 
     def __init__(self, date: datetime.date) -> None:
         self.date = date
         self.items = list()
 
-    def __iter__(self) -> Iterator:
+    def __iter__(self) -> Iterator[Item]:
+        """Iterates over the items of the page."""
         for element in self.items:
             yield element
 
     def __str__(self) -> str:
         return f"Page({self.date})"
 
-    def add(self, item):
-        """Adds an element."""
+    def add(self, item: Item):
+        """Adds an item to the page."""
         if isinstance(item, Appointment):
             item_type = "Appointment"
         elif isinstance(item, Note):
@@ -54,7 +56,8 @@ class Page:
             if item_type == "Task":
                 yield item
 
-    def find(self, title: str) -> Appointment | Note | Task:
+    def find(self, title: str) -> Item:
+        """Find item in page by title."""
         for item, item_type in self.items:
             if item.title == title:
                 return item
