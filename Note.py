@@ -21,7 +21,7 @@ class Note(Item):
         """Returns Note as dict."""
 
         note_dict = dict()
-        note_dict["note_id"] = self.note_id
+        note_dict["item_id"] = self.item_id
         note_dict["title"] = self.title
         note_dict["content"] = self.content
 
@@ -30,12 +30,12 @@ class Note(Item):
     @staticmethod
     def from_dict(note_dict: dict) -> Note:
         """Generates Note from dict."""
-        note_id: str = note_dict.get("note_id")
+        item_id: str = note_dict.get("item_id")
         title: str = note_dict.get("title")
         content: str = note_dict.get("content")
 
         note = Note(title, content)
-        note.note_id = note_id
+        note.item_id = item_id
 
         return note
 

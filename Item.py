@@ -8,7 +8,7 @@ class Item:
     title: str
 
     def __init__(self, title: str):
-        self.note_id = uuid4().hex
+        self.item_id = uuid4().hex
         self.title = title
 
     def __repr__(self) -> str:

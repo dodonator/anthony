@@ -37,7 +37,7 @@ class Task(Item):
         """Returns Task as dict."""
 
         task_dict = dict()
-        task_dict["task_id"] = self.task_id
+        task_dict["item_id"] = self.task_id
         task_dict["title"] = self.title
         task_dict["content"] = self.content
         task_dict["done"] = self.done
@@ -49,7 +49,7 @@ class Task(Item):
     @staticmethod
     def from_dict(task_dict: dict) -> Task:
         """Generates Task from dict."""
-        task_id = task_dict.get("task_id")
+        item_id = task_dict.get("item_id")
         title = task_dict.get("title", "")
         content = task_dict.get("content", "")
         done = task_dict.get("done", False)
@@ -57,7 +57,7 @@ class Task(Item):
         execution_date = task_dict.get("execution_date", None)
 
         task = Task(title, content, done, active, execution_date)
-        task.task_id = task_id
+        task.item_id = item_id
 
         return task
 

@@ -26,7 +26,7 @@ class Appointment(Item):
     def to_dict(self) -> dict:
         """Returns Appointment as dict."""
         appointment_dict = dict()
-        appointment_dict["appointment_id"] = self.appointment_id
+        appointment_dict["item_id"] = self.item_id
         appointment_dict["title"] = self.title
         appointment_dict["content"] = self.content
         appointment_dict["start"] = self.start
@@ -35,13 +35,13 @@ class Appointment(Item):
     @staticmethod
     def from_dict(appointment_dict: dict) -> Appointment:
         """Generates Appointment from dict."""
-        appointment_id = appointment_dict.get("appointment_id")
+        item_id = appointment_dict.get("item_id")
         title: str = appointment_dict.get("title")
         content: str = appointment_dict.get("content")
         start: datetime.datetime = appointment_dict.get("start")
 
         appointment = Appointment(title, content, start)
-        appointment.appointment_id = appointment_id
+        appointment.item_id = item_id
 
         return appointment
 
