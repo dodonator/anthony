@@ -11,7 +11,7 @@ class Note(Item):
         title: str,
         content="",
     ):
-        super.__init__(title)
+        super().__init__(title)
         self.content = content
 
     def __str__(self) -> str:
