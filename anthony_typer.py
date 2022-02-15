@@ -68,10 +68,16 @@ def list(item_type: str = ""):
 
 
 @app.command()
-def show(title: str):
+def show(
+    title: str,
+    full: bool = False,
+):
     result = page.find(title)
     if result is not None:
-        typer.echo(result)
+        if full:
+            typer.echo(repr(result))
+        else:
+            typer.echo(result)
 
 
 @app.command()
