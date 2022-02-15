@@ -23,36 +23,36 @@ class Page:
     def __str__(self) -> str:
         return f"Page({self.date})"
 
-    def add(self, element):
+    def add(self, item):
         """Adds an element."""
-        if isinstance(element, Appointment):
-            element_type = "Appointment"
-        elif isinstance(element, Note):
-            element_type = "Note"
-        elif isinstance(element, Task):
-            element_type = "Task"
+        if isinstance(item, Appointment):
+            item_type = "Appointment"
+        elif isinstance(item, Note):
+            item_type = "Note"
+        elif isinstance(item, Task):
+            item_type = "Task"
         else:
-            raise NotImplementedError(f"Unknown element type {type(element)}")
+            raise NotImplementedError(f"Unknown item type {type(item)}")
 
-        self.items.append((element, element_type))
+        self.items.append((item, item_type))
 
     def appointments(self) -> Iterator[Appointment]:
         """Returns all appointments."""
-        for element, element_type in self.items:
-            if element_type == "Appointment":
-                yield element
+        for item, item_type in self.items:
+            if item_type == "Appointment":
+                yield item
 
     def notes(self) -> Iterator[Note]:
         """Returns all notes."""
-        for element, element_type in self.items:
-            if element_type == "Note":
-                yield element
+        for item, item_type in self.items:
+            if item_type == "Note":
+                yield item
 
     def tasks(self) -> Iterator[Task]:
         """Returns all Tasks."""
-        for element, element_type in self.items:
-            if element_type == "Task":
-                yield element
+        for item, item_type in self.items:
+            if item_type == "Task":
+                yield item
 
     def find(self, title: str) -> Appointment | Note | Task:
         for item, item_type in self.items:
