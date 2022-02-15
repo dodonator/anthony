@@ -5,6 +5,7 @@ import typer
 
 from Appointment import Appointment
 from IO import init_dir, initialize_page, save_page
+from Item import Item
 from Note import Note
 from Task import Task
 
@@ -100,8 +101,16 @@ def show(
 
 
 @app.command()
-def delete(title: str):
-    pass
+def complete(title: str):
+    """Completes the task successfully."""
+    item: Item = page.find(title)
+    if isinstance(item, Task):
+        task: Task = item
+    else:
+        raise Exception("You can only complete Tasks.")
+
+    task.done = True
+    task.active = False
 
 
 if __name__ == "__main__":
