@@ -62,6 +62,25 @@ def list(item_type: str = ""):
 
     else:
         items = [i[0] for i in page.items]
+        appointments = page.appointments()
+        print("Appointments: ")
+        for appointment in appointments:
+            print(f"* {appointment}")
+        print()
+
+        notes = page.notes()
+        print("Notes: ")
+        for note in notes:
+            print(f"* {note}")
+        print()
+
+        tasks = page.tasks()
+        print("Tasks: ")
+        for task in tasks:
+            print(f"* {task}")
+        print()
+
+        return
 
     for item in items:
         print(item)
