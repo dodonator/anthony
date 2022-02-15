@@ -112,6 +112,8 @@ def complete(title: str):
     task.done = True
     task.active = False
 
+    typer.echo(f"Completed the task {task} successfull.")
+
 
 @app.command()
 def cancel(title: str):
@@ -124,6 +126,8 @@ def cancel(title: str):
 
     task.done = False
     task.active = False
+
+    typer.echo(f"Cancelled the task {task}.")
 
 
 if __name__ == "__main__":
