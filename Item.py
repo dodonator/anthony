@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from uuid import uuid4
 
 
@@ -11,3 +13,6 @@ class Item:
 
     def __str__(self) -> str:
         return f"Item({self.title})"
+
+    def __eq__(self, other: Item) -> bool:
+        return self.item_id == other.item_id
