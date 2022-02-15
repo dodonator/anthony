@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from uuid import uuid4
+from Item import Item
 
 
-class Note:
-    note_id: str
-    title: str
+class Note(Item):
     content: str
 
     def __init__(
@@ -13,8 +11,7 @@ class Note:
         title: str,
         content="",
     ):
-        self.note_id = uuid4().hex
-        self.title = title
+        super.__init__(title)
         self.content = content
 
     def __str__(self) -> str:
