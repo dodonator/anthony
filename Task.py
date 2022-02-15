@@ -37,7 +37,7 @@ class Task(Item):
         """Returns Task as dict."""
 
         task_dict = dict()
-        task_dict["item_id"] = self.task_id
+        task_dict["item_id"] = self.item_id
         task_dict["title"] = self.title
         task_dict["content"] = self.content
         task_dict["done"] = self.done
