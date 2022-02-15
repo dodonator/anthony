@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import datetime
-from uuid import uuid4
+
+from Item import Item
 
 
-class Appointment:
-    appointment_id: str
-    title: str
+class Appointment(Item):
     content: str
     start: datetime.datetime
 
@@ -17,8 +16,7 @@ class Appointment:
         start: datetime.datetime,
     ) -> None:
 
-        self.appointment_id = uuid4().hex
-        self.title = title
+        super().__init__(title)
         self.content = content
         self.start = start
 
