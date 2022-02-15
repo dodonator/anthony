@@ -30,7 +30,7 @@ class Task(Item):
         else:
             self.execution_date = execution_date
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"Task({self.title}, {self.execution_date})"
 
     def to_dict(self) -> dict:

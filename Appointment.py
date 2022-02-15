@@ -20,7 +20,7 @@ class Appointment(Item):
         self.content = content
         self.start = start
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"Appointment({self.title}, {self.start})"
 
     def to_dict(self) -> dict:

@@ -11,8 +11,11 @@ class Item:
         self.note_id = uuid4().hex
         self.title = title
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return f"Item({self.title})"
+
+    def __str__(self) -> str:
+        return self.title
 
     def __eq__(self, other: Item) -> bool:
         return self.item_id == other.item_id
