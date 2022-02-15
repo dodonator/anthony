@@ -113,6 +113,19 @@ def complete(title: str):
     task.active = False
 
 
+@app.command()
+def cancel(title: str):
+    """Completes the task unsuccessfully."""
+    item: Item = page.find(title)
+    if isinstance(item, Task):
+        task: Task = item
+    else:
+        raise Exception("You can only complete Tasks.")
+
+    task.done = False
+    task.active = False
+
+
 if __name__ == "__main__":
     init_dir(source_path)
     page, path = initialize_page(source_path)
