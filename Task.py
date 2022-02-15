@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import datetime
-from uuid import uuid4
+
+from Item import Item
 
 
-class Task:
-    task_id: str
-    title: str
+class Task(Item):
     content: str
     done: bool
     active: bool
@@ -21,8 +20,7 @@ class Task:
         execution_date=None,
     ) -> None:
 
-        self.task_id = uuid4().hex
-        self.title = title
+        super().__init__(title)
         self.content = content
         self.done = done
         self.active = active
