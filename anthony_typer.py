@@ -113,6 +113,7 @@ def complete(title: str):
     task.active = False
 
     typer.echo(f"Completed the task {task} successfull.")
+    save_page(path, page)
 
 
 @app.command()
@@ -128,6 +129,7 @@ def cancel(title: str):
     task.active = False
 
     typer.echo(f"Cancelled the task {task}.")
+    save_page(path, page)
 
 
 if __name__ == "__main__":
