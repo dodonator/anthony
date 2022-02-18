@@ -5,12 +5,10 @@ from pathlib import Path
 
 import typer
 
-from Appointment import Appointment
 from errors import UnknownItemType
-from IO import initialize_source_dir, initialize_page, save_page
+from IO import initialize_page, initialize_source_dir, save_page
 from Item import Item
-from Note import Note
-from Task import Task
+from model import Appointment, Note, Task
 
 source_path = Path("./source/")
 

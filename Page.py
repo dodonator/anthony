@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime
 from typing import Iterator, List
 
-from Appointment import Appointment
+from model import Appointment
 from Item import Item
 from Note import Note
 from Task import Task
