@@ -125,7 +125,7 @@ def cancel(title: str):
     if isinstance(item, Task):
         task: Task = item
     else:
-        raise Exception("You can only complete Tasks.")
+        raise Exception("You can only cancel Tasks.")
 
     task.done = False
     task.active = False
