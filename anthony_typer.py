@@ -6,6 +6,7 @@ from pathlib import Path
 import typer
 
 from Appointment import Appointment
+from errors import UnknownItemType
 from IO import init_dir, initialize_page, save_page
 from Item import Item
 from Note import Note
@@ -46,7 +47,7 @@ def add(item_type: str):
         typer.echo(f"added {task}")
 
     else:
-        raise Exception(f"Unknown item type {item_type}.")
+        raise UnknownItemType(f"Unknown item type {item_type}.")
 
     save_page(path, page)
 
