@@ -44,7 +44,7 @@ def add(item_type: str):
         typer.echo(f"added {task}")
 
     else:
-        pass
+        raise Exception(f"Unknown item type {item_type}.")
 
     save_page(path, page)
 
