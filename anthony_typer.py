@@ -97,7 +97,7 @@ def show(
     result = page.find(title)
     if result is not None:
         if full:
-            typer.echo(repr(result))
+            result.show()
         else:
             typer.echo(result)
 

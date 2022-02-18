@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pprint import pprint
 from uuid import uuid4
 
 
@@ -19,3 +20,6 @@ class Item:
 
     def __eq__(self, other: Item) -> bool:
         return self.item_id == other.item_id
+
+    def show(self):
+        pprint(self.__dict__)
