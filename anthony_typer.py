@@ -7,7 +7,7 @@ import typer
 
 from Appointment import Appointment
 from errors import UnknownItemType
-from IO import init_dir, initialize_page, save_page
+from IO import initialize_source_dir, initialize_page, save_page
 from Item import Item
 from Note import Note
 from Task import Task
@@ -136,7 +136,7 @@ def cancel(title: str):
 
 
 if __name__ == "__main__":
-    init_dir(source_path)
+    initialize_source_dir(source_path)
     page, path = initialize_page(source_path)
     app()
     save_page(path, page)

@@ -10,7 +10,7 @@ from yaml import dump, load
 from Page import Page
 
 
-def init_dir(path: Path):
+def initialize_source_dir(path: Path):
     """Initialize source directory."""
     if not path.exists():
         path.mkdir()
@@ -22,8 +22,8 @@ def init_dir(path: Path):
         year_path.mkdir()
 
 
-def extract_page_files(path: Path):
-    """Extracts paths to pages from given path."""
+def glob_page_files(path: Path):
+    """Extracts paths to page files from given path."""
     yaml_files = path.glob("**/*.yaml")
     page_files = list()
     for path in yaml_files:
@@ -64,7 +64,7 @@ def initialize_page(source_path: Path) -> Tuple[Page, Path]:
     today = datetime.date.today()
 
     # extract all page files
-    page_files = extract_page_files(source_path)
+    page_files = glob_page_files(source_path)
 
     # check if there are any page files
     if page_files:

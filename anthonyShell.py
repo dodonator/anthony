@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from Appointment import parse_appointment
-from IO import init_dir, initialize_page, save_page
+from IO import initialize_source_dir, initialize_page, save_page
 from Note import parse_note
 from Page import Page
 from Task import parse_task
@@ -78,7 +78,7 @@ Type help or ? to list commands.
         print(f"current page (path): {self.current_path}")
 
     def preloop(self) -> None:
-        init_dir(self.source_path)
+        initialize_source_dir(self.source_path)
         page, path = initialize_page(self.source_path)
         self.current_page = page
         self.current_path = path
