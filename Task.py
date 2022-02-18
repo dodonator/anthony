@@ -60,32 +60,3 @@ class Task(Item):
         task.item_id = item_id
 
         return task
-
-
-def parse_task(line: str) -> Task:
-    """Parses Task from line."""
-    title = line
-    content = input("content: ")
-    done_str = input("done (y/n): ")
-    active_str = input("active (y/n): ")
-    execution_iso = input("execution_date (iso format): ")
-
-    title = title.lstrip()
-
-    if done_str == "" or "n":
-        done = False
-    elif done_str == "y" or "Y":
-        done = True
-
-    if active_str == "" or "n":
-        active = False
-    elif active_str == "y" or "Y":
-        active = True
-
-    if execution_iso == "":
-        execution_date = None
-    else:
-        execution_date = datetime.date.fromisoformat(execution_iso)
-
-    task = Task(title, content, done, active, execution_date)
-    return task

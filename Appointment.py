@@ -44,25 +44,3 @@ class Appointment(Item):
         appointment.item_id = item_id
 
         return appointment
-
-
-def parse_appointment(line: str) -> Appointment:
-    """
-    Reads an appointment from an comma seperated string.
-    'title, [content,] start_date'
-    """
-    elements = line.split(",")
-
-    if len(elements) == 2:
-        title, start_iso = elements
-        content = ""
-    elif len(elements) == 3:
-        title, content, start_iso = elements
-    else:
-        raise Exception("Couldn't parse appointment.")
-
-    start_iso = start_iso.lstrip()
-    content = content.lstrip()
-    start_date = datetime.datetime.fromisoformat(start_iso)
-    appointment = Appointment(title, content, start_date)
-    return appointment
