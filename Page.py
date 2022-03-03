@@ -3,8 +3,7 @@ from __future__ import annotations
 import datetime
 from typing import Iterator, List
 
-from Item import Item
-from model import Appointment, Note, Task
+from model import Appointment, Item, Note, Task
 
 
 class Page:

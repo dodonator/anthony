@@ -7,8 +7,7 @@ import typer
 
 from errors import UnknownItemType
 from IO import initialize_page, initialize_source_dir, save_page
-from Item import Item
-from model import Appointment, Note, Task
+from model import Appointment, Item, Note, Task
 
 source_path = Path("./source/")
 
