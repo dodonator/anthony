@@ -59,6 +59,9 @@ class Item(BaseModel):
         return self.id == other.id
 
     def __hash__(self) -> int:
+        if self.id is None:
+            self.id = uuid4().hex
+
         return int(self.id, 16)
 
     @staticmethod
