@@ -11,7 +11,7 @@ class Appointment(BaseModel):
     content: str
     start: datetime.datetime
 
-    @validator("id")
+    @validator("id", pre=True, always=True)
     def id_must_be_valid_uuid(cls, v):
         if v is not None:
             v = UUID(v).hex
