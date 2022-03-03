@@ -179,3 +179,10 @@ class Page:
                 page_dict.update({key: value})
 
         return page_dict
+
+    @staticmethod
+    def from_dict(page_dict) -> Page:
+        date = page_dict["date"]
+        page = Page(date)
+        # ToDo: import of ItemContainer
+        return page

@@ -3,6 +3,12 @@ import re
 from pathlib import Path
 from typing import Generator
 
+from yaml import CDumper as Dumper
+from yaml import CLoader as Loader
+from yaml import dump, load
+
+from model import Page
+
 # file directory example:
 #
 # files/
@@ -54,3 +60,19 @@ def extract_page_files(path: Path) -> list[Path]:
         if re.match(r"\d{4}-\d{2}-\d{2}", yaml_path.stem)
     ]
     return page_files
+
+
+def save_page(path: Path, page: Page):
+    """Saves a page to a given path."""
+    page_dict = page.to_dict()
+    with path.open("w") as file:
+        dump(page_dict, file, Dumper=Dumper)
+
+
+def load_page(path: Path) -> Page:
+    """Loads a page from a given path."""
+    with path.open("r") as file:
+        page_dict = load(file, Loader=Loader)
+
+    page = Page.from_dict(page_dict)
+    return page
