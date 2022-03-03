@@ -49,6 +49,9 @@ class Item(BaseModel):
     def __eq__(self, other: Item) -> bool:
         return self.id == other.id
 
+    def __hash__(self) -> int:
+        return int(self.id, 16)
+
     @staticmethod
     def from_dict(item_data: dict) -> Item:
         """Generates Item from dict.
