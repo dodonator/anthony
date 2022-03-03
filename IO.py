@@ -9,6 +9,15 @@ from yaml import dump, load
 
 from model import Page
 
+# file directory example:
+#
+# source/
+# └── 2022
+#     ├── 2022-02-11.yaml
+#     ├── 2022-02-15.yaml
+#     ├── 2022-02-18.yaml
+#     └── 2022-03-03.yaml
+
 
 def initialize_source_dir(path: Path):
     """Initialize source directory."""
