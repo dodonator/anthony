@@ -6,6 +6,8 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, validator
 
+from errors import UnknownItemType
+
 REGISTERED_ITEMS = {}
 T = TypeVar("T")
 
@@ -157,6 +159,6 @@ class Page:
             case Task():
                 self.tasks.append(item)
             case Item():
-                raise ValueError(f"Unknown item type {type(item)}")
+                raise UnknownItemType(f"Unknown item type {type(item)}")
             case _:
                 raise ValueError(f"Unknown type {type(item)}")
