@@ -1,90 +1,53 @@
 from __future__ import annotations
 
 import datetime
-from typing import Iterator, List
+from typing import Generic, TypeVar
 
 from model import Appointment, Item, Note, Task
+
+T = TypeVar("T")
+
+
+class ItemContainer(Generic[T]):
+    members: list[T]
+
+    def __init__(self, members=None) -> None:
+        if members is not None:
+            self.members = list(members)
+        else:
+            self.members = list()
+
+    def append(self, item: T):
+        self.members.append(item)
 
 
 class Page:
     date: datetime.date
-    items: List[List[Item], str]
+    appointments: ItemContainer[Appointment]
+    notes: ItemContainer[Note]
+    tasks: ItemContainer[Task]
 
     def __init__(self, date: datetime.date) -> None:
         self.date = date
-        self.items = list()
-
-    def __iter__(self) -> Iterator[Item]:
-        """Iterates over the items of the page."""
-        for element in self.items:
-            yield element
+        self.appointments: ItemContainer[Appointment] = ItemContainer()
+        self.notes: ItemContainer[Note] = ItemContainer()
+        self.tasks: ItemContainer[Task] = ItemContainer()
 
     def __str__(self) -> str:
+        return self.date.isoformat()
+
+    def __repr__(self) -> str:
         return f"Page({self.date})"
 
     def add(self, item: Item):
-        """Adds an item to the page."""
-        if isinstance(item, Appointment):
-            item_type = "Appointment"
-        elif isinstance(item, Note):
-            item_type = "Note"
-        elif isinstance(item, Task):
-            item_type = "Task"
-        else:
-            raise NotImplementedError(f"Unknown item type {type(item)}")
-
-        self.items.append((item, item_type))
-
-    def appointments(self) -> Iterator[Appointment]:
-        """Returns all appointments."""
-        for item, item_type in self.items:
-            if item_type == "Appointment":
-                yield item
-
-    def notes(self) -> Iterator[Note]:
-        """Returns all notes."""
-        for item, item_type in self.items:
-            if item_type == "Note":
-                yield item
-
-    def tasks(self) -> Iterator[Task]:
-        """Returns all Tasks."""
-        for item, item_type in self.items:
-            if item_type == "Task":
-                yield item
-
-    def find(self, title: str) -> Item:
-        """Find item in page by title."""
-        for item, item_type in self.items:
-            if item.title == title:
-                return item
-
-        return None
-
-    def to_dict(self) -> dict:
-        """Returns Page as a dict."""
-        page_dict = dict()
-        page_dict["date"] = self.date
-        items = [[i.to_dict(), i_type] for (i, i_type) in self.items]
-        page_dict["items"] = items
-        return page_dict
-
-    @staticmethod
-    def from_dict(page_dict: dict) -> Page:
-        """Generates Page from dict."""
-        date = page_dict.get("date")
-        page = Page(date)
-
-        items = page_dict.get("items")
-        for item_dict, item_type in items:
-            if item_type == "Appointment":
-                item = Appointment.from_dict(item_dict)
-            elif item_type == "Note":
-                item = Note.from_dict(item_dict)
-            elif item_type == "Task":
-                item = Task.from_dict(item_dict)
-            else:
-                continue
-
-            page.items.append([item, item_type])
-        return page
+        match item:
+            case Appointment():
+                self.appointments.append(item)
+            case Note():
+                self.notes.append(item)
+            case Task():
+                self.tasks.append(item)
+            case Item():
+                raise ValueError(f"Unknown item type {type(item)}")
+            case _:
+                raise ValueError(f"Unknown type {type(item)}")
