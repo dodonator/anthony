@@ -1,24 +1,8 @@
 from __future__ import annotations
 
 import datetime
-from typing import Generic, TypeVar
 
-from model import Appointment, Item, Note, Task
-
-T = TypeVar("T")
-
-
-class ItemContainer(Generic[T]):
-    members: list[T]
-
-    def __init__(self, members=None) -> None:
-        if members is not None:
-            self.members = list(members)
-        else:
-            self.members = list()
-
-    def append(self, item: T):
-        self.members.append(item)
+from model import Appointment, Item, ItemContainer, Note, Task
 
 
 class Page:
