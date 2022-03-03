@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Generic, Optional, TypeVar
+from typing import Generic, Iterator, Optional, TypeVar
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, validator
@@ -117,6 +117,10 @@ class ItemContainer(Generic[T]):
         else:
             self.members = list()
 
+    def __iter__(self) -> Iterator:
+        for item in self.members:
+            yield item
+
     def append(self, item: T):
         self.members.append(item)
 
@@ -165,3 +169,13 @@ class Page:
                 raise UnknownItemType(f"Unknown item type {type(item)}")
             case _:
                 raise ValueError(f"Unknown type {type(item)}")
+
+    def to_dict(self) -> dict:
+        page_dict = dict()
+        for key, value in self.__dict__.items():
+            if isinstance(value, ItemContainer):
+                page_dict[key] = [item.to_record() for item in value]
+            else:
+                page_dict.update({key: value})
+
+        return page_dict
