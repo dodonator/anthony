@@ -6,7 +6,7 @@ from pathlib import Path
 import typer
 
 from errors import UnknownItemType
-from IO import initialize_page, initialize_source_dir, save_page
+from IO import init_folder_structure, initialize_page, save_page
 from model import Appointment, Item, Note, Task
 
 source_path = Path("./source/")
