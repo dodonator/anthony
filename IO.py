@@ -7,7 +7,7 @@ from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
 from yaml import dump, load
 
-from Page import Page
+from model import Page
 
 
 def initialize_source_dir(path: Path):
