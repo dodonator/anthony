@@ -6,6 +6,8 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, validator
 
+REGISTERED_ITEMS = {}
+
 
 class Item(BaseModel):
     id: Optional[str] = None
@@ -19,6 +21,10 @@ class Item(BaseModel):
         else:
             v = uuid4().hex
         return v
+
+    def __init_subclass__(cls):
+        print(cls.__name__)
+        REGISTERED_ITEMS[cls.__name__] = cls
 
     def __str__(self) -> str:
         """Returns the item title as string representation.
@@ -73,6 +79,27 @@ class Item(BaseModel):
         """
         item_dict: dict = self.__dict__
         return item_dict
+
+    def to_record(self) -> tuple[dict, str]:
+        """Returns Item as an record.
+
+        Returns:
+            tuple[dict, str]: item_dict, item_type
+        """
+        return self.__dict__, self.__class__.__name__
+
+    @classmethod
+    def from_record(cls, record: tuple[dict, str]) -> Item:
+        """Creates Item given from an dict and an item type.
+
+        Args:
+            record (tuple[dict, str]): item_dict, item_type
+
+        Returns:
+            Item: item
+        """
+        item_dict, item_type_str = record
+        return REGISTERED_ITEMS[item_type_str](**item_dict)
 
 
 class Appointment(Item):
