@@ -6,7 +6,7 @@ from pathlib import Path
 import typer
 
 from errors import UnknownItemType
-from IO import initialize_page, init_folder_structure, save_page
+from IO import initialize_page, initialize_source_dir, save_page
 from model import Appointment, Item, Note, Task
 
 source_path = Path("./source/")
@@ -133,7 +133,7 @@ def cancel(title: str):
 
 
 if __name__ == "__main__":
-    init_folder_structure(source_path)
+    initialize_source_dir(source_path)
     page, path = initialize_page(source_path)
     app()
     save_page(path, page)
