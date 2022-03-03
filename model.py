@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import datetime
-from typing import Optional
+from typing import Generic, Optional, TypeVar
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, validator
 
 REGISTERED_ITEMS = {}
+T = TypeVar("T")
 
 
 class Item(BaseModel):
@@ -100,6 +101,19 @@ class Item(BaseModel):
         """
         item_dict, item_type_str = record
         return REGISTERED_ITEMS[item_type_str](**item_dict)
+
+
+class ItemContainer(Generic[T]):
+    members: list[T]
+
+    def __init__(self, members=None) -> None:
+        if members is not None:
+            self.members = list(members)
+        else:
+            self.members = list()
+
+    def append(self, item: T):
+        self.members.append(item)
 
 
 class Appointment(Item):
