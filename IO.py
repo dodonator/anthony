@@ -1,7 +1,7 @@
 import datetime
 import re
 from pathlib import Path
-from typing import Tuple
+from typing import Generator, Tuple
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -19,7 +19,7 @@ from model import Page
 #     └── 2022-03-03.yaml
 
 # steps:
-# 1. Initialize file directory
+# 1. Initialize folder structure
 # 2. glob yaml files
 # 3. load last recent page
 # 4. create new page
@@ -43,15 +43,22 @@ def init_folder_structure(path: Path):
         year_path.mkdir()
 
 
-def glob_page_files(path: Path):
-    """Extracts paths to page files from given path."""
-    yaml_files = path.glob("**/*.yaml")
-    page_files = list()
-    for path in yaml_files:
-        stem = path.stem
-        match = re.match(r"\d{4}-\d{2}-\d{2}", stem)
-        if match:
-            page_files.append(path)
+def extract_page_files(path: Path) -> list[Path]:
+    """Extracts all page file from directory.
+
+    Args:
+        path (Path): root directory
+
+    Returns:
+        list[Path]: page files
+    """
+    yaml_files: Generator = path.glob("**/*.yaml")
+
+    page_files = [
+        yaml_path
+        for yaml_path in yaml_files
+        if re.match(r"\d{4}-\d{2}-\d{2}", yaml_path.stem)
+    ]
     return page_files
 
 
@@ -85,7 +92,7 @@ def initialize_page(source_path: Path) -> Tuple[Page, Path]:
     today = datetime.date.today()
 
     # extract all page files
-    page_files = glob_page_files(source_path)
+    page_files = extract_page_files(source_path)
 
     # check if there are any page files
     if page_files:
