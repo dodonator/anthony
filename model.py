@@ -46,8 +46,8 @@ class Item(BaseModel):
         """
         return self.__dict__
 
-    def __hash__(self) -> str:
-        return self.id
+    def __eq__(self, other: Item) -> bool:
+        return self.id == other.id
 
     @staticmethod
     def from_dict(item_data: dict) -> Item:
