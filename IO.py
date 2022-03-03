@@ -11,12 +11,20 @@ from model import Page
 
 # file directory example:
 #
-# source/
+# files/
 # └── 2022
 #     ├── 2022-02-11.yaml
 #     ├── 2022-02-15.yaml
 #     ├── 2022-02-18.yaml
 #     └── 2022-03-03.yaml
+
+# steps:
+# 1. Initialize file directory
+# 2. glob yaml files
+# 3. load last recent page
+# 4. create new page
+
+DIRECTORY = Path("files")
 
 
 def initialize_source_dir(path: Path):
