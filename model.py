@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 from typing import Optional
 from uuid import UUID, uuid4
@@ -46,6 +48,28 @@ class Item(BaseModel):
 
     def __hash__(self) -> str:
         return self.id
+
+    @staticmethod
+    def from_dict(item_data: dict) -> Item:
+        """Generates Item from dict.
+
+        Args:
+            item_data (dict): item data
+
+        Returns:
+            Item: resulting Item
+        """
+        item: Item = Item(**item_data)
+        return item
+
+    def to_dict(self) -> dict:
+        """Returns Item as dict.
+
+        Returns:
+            dict: item dict
+        """
+        item_dict: dict = self.__dict__
+        return item_dict
 
 
 class Appointment(Item):
