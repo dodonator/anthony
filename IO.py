@@ -27,13 +27,17 @@ from model import Page
 DIRECTORY = Path("files")
 
 
-def initialize_source_dir(path: Path):
-    """Initialize source directory."""
+def init_folder_structure(path: Path):
+    """Initializes folder structure at given path.
+
+    Args:
+        path (Path): location fo folder structure
+    """
     if not path.exists():
         path.mkdir()
 
-    year = datetime.date.today().year
-    year_path = path / str(year)
+    current_year: int = datetime.date.today().year
+    year_path: Path = path / Path(str(current_year))
 
     if not year_path.exists():
         year_path.mkdir()
