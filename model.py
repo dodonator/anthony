@@ -5,11 +5,10 @@ from uuid import UUID, uuid4
 from pydantic import BaseModel, validator
 
 
-class Appointment(BaseModel):
+class Item(BaseModel):
     id: Optional[str] = None
     title: str
     content: str
-    start: datetime.datetime
 
     @validator("id", pre=True, always=True)
     def id_must_be_valid_uuid(cls, v):
@@ -20,16 +19,15 @@ class Appointment(BaseModel):
         return v
 
 
-class Note(BaseModel):
-    id: Optional[str]
-    title: str
-    content: str
+class Appointment(Item):
+    start: datetime.datetime
 
 
-class Task(BaseModel):
-    id: Optional[str]
-    title: str
-    content: str
+class Note(Item):
+    pass
+
+
+class Task(Item):
     done: bool
     active: bool
     execution_date: datetime.date
