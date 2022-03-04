@@ -55,6 +55,14 @@ class Item(BaseModel):
         return self.__dict__
 
     def __eq__(self, other: Item) -> bool:
+        """Checks for equality of two Items
+
+        Args:
+            other (Item): another item
+
+        Returns:
+            bool: result
+        """
         return self.id == other.id
 
     def __hash__(self) -> int:
@@ -140,13 +148,13 @@ class Task(Item):
 
 class Page:
     date: datetime.date
-    items: dict[str, list[Item]]
+    entries: dict[str, list[Item]]
 
     def __init__(self, date: datetime.date) -> None:
         self.date = date
-        self.items = dict()
+        self.entries = dict()
         for name in REGISTERED_ITEMS:
-            self.items[name] = list()
+            self.entries[name] = list()
 
     def __str__(self) -> str:
         return self.date.isoformat()
@@ -162,24 +170,24 @@ class Page:
 
     def add(self, item: Item):
         type_name = item.__class__.__name__
-        if type_name in self.items:
-            self.items[type_name].append(item)
+        if type_name in self.entries:
+            self.entries[type_name].append(item)
         else:
             raise UnknownItemType(f"Unknown item type {type_name}")
 
     def to_dict(self) -> dict:
         page_dict = dict()
         page_dict["date"] = self.date
-        page_dict["items"] = dict()
-        for item_type, item_list in self.items.items():
-            page_dict["items"][item_type] = [item.to_record() for item in item_list]
+        page_dict["entries"] = dict()
+        for item_type, item_list in self.entries.items():
+            page_dict["entries"][item_type] = [item.to_record() for item in item_list]
         return page_dict
 
     @staticmethod
     def from_dict(page_dict) -> Page:
         date = page_dict["date"]
         page = Page(date)
-        for item_type, record_list in page_dict["items"].items():
+        for item_type, record_list in page_dict["entries"].items():
             if not record_list:
                 continue
             for record in record_list:
