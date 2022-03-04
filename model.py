@@ -157,6 +157,9 @@ class Page:
     def __rich__(self) -> dict:
         return self.to_dict()
 
+    def __eq__(self, other: Page) -> bool:
+        return self.to_dict() == other.to_dict()
+
     def add(self, item: Item):
         type_name = item.__class__.__name__
         if type_name in self.items:
