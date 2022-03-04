@@ -26,7 +26,6 @@ class Item(BaseModel):
         return v
 
     def __init_subclass__(cls):
-        print(cls.__name__)
         REGISTERED_ITEMS[cls.__name__] = cls
 
     def __str__(self) -> str:
@@ -141,15 +140,13 @@ class Task(Item):
 
 class Page:
     date: datetime.date
-    appointments: ItemContainer[Appointment]
-    notes: ItemContainer[Note]
-    tasks: ItemContainer[Task]
+    items: dict[str, list[Item]]
 
     def __init__(self, date: datetime.date) -> None:
         self.date = date
-        self.appointments: ItemContainer[Appointment] = ItemContainer()
-        self.notes: ItemContainer[Note] = ItemContainer()
-        self.tasks: ItemContainer[Task] = ItemContainer()
+        self.items = dict()
+        for name in REGISTERED_ITEMS:
+            self.items[name] = list()
 
     def __str__(self) -> str:
         return self.date.isoformat()
@@ -157,32 +154,33 @@ class Page:
     def __repr__(self) -> str:
         return f"Page({self.date})"
 
+    def __rich__(self) -> dict:
+        return self.to_dict()
+
     def add(self, item: Item):
-        match item:
-            case Appointment():
-                self.appointments.append(item)
-            case Note():
-                self.notes.append(item)
-            case Task():
-                self.tasks.append(item)
-            case Item():
-                raise UnknownItemType(f"Unknown item type {type(item)}")
-            case _:
-                raise ValueError(f"Unknown type {type(item)}")
+        type_name = item.__class__.__name__
+        if type_name in self.items:
+            self.items[type_name].append(item)
+        else:
+            raise UnknownItemType(f"Unknown item type {type_name}")
 
     def to_dict(self) -> dict:
         page_dict = dict()
-        for key, value in self.__dict__.items():
-            if isinstance(value, ItemContainer):
-                page_dict[key] = [item.to_record() for item in value]
-            else:
-                page_dict.update({key: value})
-
+        page_dict["date"] = self.date
+        page_dict["items"] = dict()
+        for item_type, item_list in self.items.items():
+            page_dict["items"][item_type] = [item.to_record() for item in item_list]
         return page_dict
 
     @staticmethod
     def from_dict(page_dict) -> Page:
         date = page_dict["date"]
         page = Page(date)
-        # ToDo: import of ItemContainer
+        for item_type, record_list in page_dict["items"].items():
+            if not record_list:
+                continue
+            for record in record_list:
+                item = Item.from_record(record)
+                page.add(item)
+
         return page
