@@ -162,7 +162,8 @@ class Page:
         page_dict["date"] = self.date
         page_dict["entries"] = dict()
         for item_type, item_list in self.entries.items():
-            page_dict["entries"][item_type] = [item.to_record() for item in item_list]
+            record_list = [item.to_record() for item in item_list]
+            page_dict["entries"][item_type] = record_list
         return page_dict
 
     @staticmethod
