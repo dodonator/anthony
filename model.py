@@ -132,8 +132,11 @@ class Page:
     date: datetime.date
     entries: dict[str, list[Item]]
 
-    def __init__(self, date: datetime.date) -> None:
-        self.date = date
+    def __init__(self, date: datetime.date = None) -> None:
+        if date is None:
+            self.date = datetime.date.today()
+        else:
+            self.date = date
         self.entries = dict()
         for name in REGISTERED_ITEMS:
             self.entries[name] = list()
