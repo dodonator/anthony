@@ -132,7 +132,7 @@ class Page:
     date: datetime.date
     entries: dict[str, list[Item]]
 
-    def __init__(self, date: datetime.date = None) -> None:
+    def __init__(self, date: Optional[datetime.date] = None) -> None:
         if date is None:
             self.date = datetime.date.today()
         else:
