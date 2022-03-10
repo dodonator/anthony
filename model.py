@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Optional
+from typing import Any, Optional
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, validator
@@ -92,20 +92,20 @@ class Item(BaseModel):
         item_dict: dict = self.__dict__
         return item_dict
 
-    def to_record(self) -> tuple[dict, str]:
+    def to_record(self) -> list[dict[str, Any] | str]:
         """Returns Item as an record.
 
         Returns:
-            tuple[dict, str]: item_dict, item_type
+            list[dict, str]: item_dict, item_type
         """
-        return self.__dict__, self.__class__.__name__
+        return [self.__dict__, self.__class__.__name__]
 
     @classmethod
-    def from_record(cls, record: tuple[dict, str]) -> Item:
+    def from_record(cls, record: list[dict[str, Any] | str]) -> Item:
         """Creates Item given from an dict and an item type.
 
         Args:
-            record (tuple[dict, str]): item_dict, item_type
+            record (list[dict, str]): item_dict, item_type
 
         Returns:
             Item: item
