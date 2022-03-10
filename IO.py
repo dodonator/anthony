@@ -1,7 +1,7 @@
 import datetime
 import re
 from pathlib import Path
-from typing import Generator, List
+from typing import Generator, List, Optional
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -62,15 +62,16 @@ def extract_page_files(path: Path) -> list[Path]:
     return page_files
 
 
-def last_recent_page(path: Path) -> Page:
+def last_recent_page(path: Path) -> Optional[Page]:
     # load all pages
     page_files: List[Path] = extract_page_files(path)
     # sort pages by date
-    sorted_files = sorted(page_files, key=lambda p: p.stem)
+    sorted_files = sorted(page_files, key=lambda p: p.stem, reverse=True)
     # get last page
-    last_path = sorted_files[-1]
-    last_page = load_page(last_path)
-    return last_page
+    for current_path in sorted_files:
+        page = load_page(current_path)
+        if page is not None:
+            return page
 
 
 def save_page(path: Path, page: Page):
@@ -80,10 +81,11 @@ def save_page(path: Path, page: Page):
         dump(page_dict, file, Dumper=Dumper)
 
 
-def load_page(path: Path) -> Page:
+def load_page(path: Path) -> Optional[Page]:
     """Loads a page from a given path."""
     with path.open("r") as file:
         page_dict = load(file, Loader=Loader)
 
-    page = Page.from_dict(page_dict)
-    return page
+    if page_dict is not None:
+        page = Page.from_dict(page_dict)
+        return page
