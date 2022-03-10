@@ -63,6 +63,14 @@ def extract_page_files(path: Path) -> list[Path]:
 
 
 def last_recent_page(path: Path) -> Optional[Page]:
+    """Returns the last recent page.
+
+    Args:
+        path (Path): root path
+
+    Returns:
+        Optional[Page]: last page (or None if no page was found)
+    """
     # load all pages
     page_files: List[Path] = extract_page_files(path)
     # sort pages by date
