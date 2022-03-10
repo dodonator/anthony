@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Any, Optional
+from typing import Any, Optional, TypedDict
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, validator
@@ -128,18 +128,23 @@ class Task(Item):
     execution_date: datetime.date
 
 
+class PageEntries(TypedDict):
+    Appointment: list[Appointment]
+    Task: list[Task]
+    Note: list[Note]
+
+
 class Page:
     date: datetime.date
-    entries: dict[str, list[Item]]
+    entries: PageEntries
 
     def __init__(self, date: Optional[datetime.date] = None) -> None:
         if date is None:
             self.date = datetime.date.today()
         else:
             self.date = date
-        self.entries = dict()
-        for name in REGISTERED_ITEMS:
-            self.entries[name] = list()
+
+        self.entries: PageEntries = {"Appointment": [], "Note": [], "Task": []}
 
     def __str__(self) -> str:
         return self.date.isoformat()
@@ -164,7 +169,8 @@ class Page:
         page_dict = dict()
         page_dict["date"] = self.date
         page_dict["entries"] = dict()
-        for item_type, item_list in self.entries.items():
+        for item_type in self.entries:
+            item_list: list = self.entries[item_type]
             record_list = [item.to_record() for item in item_list]
             page_dict["entries"][item_type] = record_list
         return page_dict
