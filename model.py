@@ -92,18 +92,17 @@ class Item(BaseModel):
         item_dict: dict = self.__dict__
         return item_dict
 
-    def to_record(self) -> list[dict[str, Any] | str]:
+    def to_record(self) -> dict[str, Any]:
         """Returns Item as an record.
 
         Returns:
             list[dict, str]: item_dict, item_type
         """
         item_dict: dict[str, Any] = self.__dict__
-        item_type_str: str = self.__class__.__name__
-        return [item_dict, item_type_str]
+        return item_dict
 
     @classmethod
-    def from_record(cls, record: list[dict[str, Any] | str]) -> Item:
+    def from_record(cls, record: dict[str, Any], item_type_str: str) -> Item:
         """Creates Item given from an dict and an item type.
 
         Args:
@@ -112,8 +111,7 @@ class Item(BaseModel):
         Returns:
             Item: item
         """
-        item_dict, item_type_str = record
-        return REGISTERED_ITEMS[item_type_str](**item_dict)
+        return REGISTERED_ITEMS[item_type_str](**record)
 
 
 class Appointment(Item):
@@ -179,7 +177,7 @@ class Page:
             if not record_list:
                 continue
             for record in record_list:
-                item = Item.from_record(record)
+                item = Item.from_record(record, item_type)
                 page.add(item)
 
         return page
