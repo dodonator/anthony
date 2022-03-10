@@ -1,7 +1,7 @@
 import datetime
 import re
 from pathlib import Path
-from typing import Generator
+from typing import Generator, List
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -60,6 +60,17 @@ def extract_page_files(path: Path) -> list[Path]:
         if re.match(r"\d{4}-\d{2}-\d{2}", yaml_path.stem)
     ]
     return page_files
+
+
+def last_recent_page(path: Path) -> Page:
+    # load all pages
+    page_files: List[Path] = extract_page_files(path)
+    # sort pages by date
+    sorted_files = sorted(page_files, key=lambda p: p.stem)
+    # get last page
+    last_path = sorted_files[-1]
+    last_page = load_page(last_path)
+    return last_page
 
 
 def save_page(path: Path, page: Page):
