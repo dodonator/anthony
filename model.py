@@ -98,7 +98,9 @@ class Item(BaseModel):
         Returns:
             list[dict, str]: item_dict, item_type
         """
-        return [self.__dict__, self.__class__.__name__]
+        item_dict: dict[str, Any] = self.__dict__
+        item_type_str: str = self.__class__.__name__
+        return [item_dict, item_type_str]
 
     @classmethod
     def from_record(cls, record: list[dict[str, Any] | str]) -> Item:
