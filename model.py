@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import Any, Optional, TypedDict
+from typing import Any, Iterator, Optional, TypedDict
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, validator
@@ -157,6 +157,18 @@ class Page:
 
     def __eq__(self, other: Page) -> bool:
         return self.to_dict() == other.to_dict()
+
+    def appointments(self) -> Iterator[Appointment]:
+        page_appointments = self.entries["Appointment"]
+        return iter(page_appointments)
+
+    def notes(self) -> Iterator[Note]:
+        page_notes = self.entries["Note"]
+        return iter(page_notes)
+
+    def tasks(self) -> Iterator[Task]:
+        page_tasks = self.entries["Task"]
+        return iter(page_tasks)
 
     def add(self, item: Item):
         type_name = item.__class__.__name__
