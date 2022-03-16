@@ -83,8 +83,8 @@ def last_recent_page(path: Path) -> Optional[Page]:
 
 
 def page_to_path(page: Page) -> Path:
-    year = page.date.year
-    path = DIRECTORY / str(year) / page.filename
+    year: int = page.date.year
+    path: Path = DIRECTORY / str(year) / page.filename
     return path
 
 
