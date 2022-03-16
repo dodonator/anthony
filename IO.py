@@ -82,6 +82,12 @@ def last_recent_page(path: Path) -> Optional[Page]:
             return page
 
 
+def page_to_path(page: Page) -> Path:
+    year = page.date.year
+    path = DIRECTORY / str(year) / page.filename
+    return path
+
+
 def save_page(path: Path, page: Page):
     """Saves a page to a given path."""
     page_dict = page.to_dict()
