@@ -97,6 +97,18 @@ def get_current_page(path: Path) -> Page:
         return last_page
 
 
+def daily_page(path: Path) -> Page:
+    today = datetime.date.today()
+    last_page = last_recent_page(path)
+    if last_page is None:
+        today_page = Page()
+    elif last_page.date != today:
+        today_page = Page()
+    else:
+        today_page = last_page
+    return today_page
+
+
 def save_page(path: Path, page: Page):
     """Saves a page to a given path."""
     page_dict = page.to_dict()
