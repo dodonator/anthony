@@ -179,6 +179,16 @@ class Page:
         else:
             raise UnknownItemType(f"Unknown item type {type_name}")
 
+    def remove(self, item: Item):
+        type_name = item.__class__.__name__
+        if type_name in self.entries:
+            if item in self.entries[type_name]:
+                self.entries[type_name].remove(item)
+            else:
+                raise ValueError(f"Item {item} not found in page")
+        else:
+            raise UnknownItemType(f"Unknown item type {type_name}")
+
     def to_dict(self) -> dict:
         page_dict = dict()
         page_dict["date"] = self.date
