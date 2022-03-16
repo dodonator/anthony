@@ -137,6 +137,7 @@ class PageEntries(TypedDict):
 class Page:
     date: datetime.date
     entries: PageEntries
+    filename: str
 
     def __init__(self, date: Optional[datetime.date] = None) -> None:
         if date is None:
@@ -145,6 +146,7 @@ class Page:
             self.date = date
 
         self.entries: PageEntries = {"Appointment": [], "Note": [], "Task": []}
+        self.filename: str = f"{self.date.isoformat()}.yaml"
 
     def __str__(self) -> str:
         return self.date.isoformat()
