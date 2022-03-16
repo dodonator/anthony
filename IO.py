@@ -88,6 +88,15 @@ def page_to_path(page: Page) -> Path:
     return path
 
 
+def get_current_page(path: Path) -> Page:
+    last_page = last_recent_page(path)
+    if last_page is None:
+        new_page = Page()
+        return new_page
+    else:
+        return last_page
+
+
 def save_page(path: Path, page: Page):
     """Saves a page to a given path."""
     page_dict = page.to_dict()
