@@ -68,7 +68,7 @@ Die Befehle für Aufgaben betreffen sowohl die Page für den aktuellen Tag, als 
 
 Befehl | Argument | Beschreibung
 --- | --- | ---
-add | | Fügt einen neuen Termin hinzu der entsprechenden Page hinzu.
+add | | Fügt einen neuen Termin der entsprechenden Page hinzu.
 list | date | Listet alle Termine am angegebenen Tag auf.
 remove | title | Entfernt diesen Termin.
 export | filename | Exportiert alle Termine im markdown Format in die angegebene Datei.
