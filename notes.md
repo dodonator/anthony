@@ -64,31 +64,31 @@ class Page:
 
 ### Appointment (Termin)
 
-Alle commands für Termine betreffen die aktuelle Page.
+Die commands für Aufgaben betreffen sowohl die Page für den aktuellen Tag, als auch die Pages vergangener Tage.
 
-**Appointment commands:**
-
-* add -> Fügt einen neuen Termin hinzu
-* list -> Listet alle Termine der aktuellen Page auf.
-* remove -> Entfernt Termin von der aktuellen Page.
-* export -> Exportiert Termine als markdown Datei.
+command | Argument | Beschreibung
+--- | --- | ---
+add | None | Fügt einen neuen Termin hinzu der entsprechenden Page hinzu.
+list | date | Listet alle Termine am angegebenen Tag auf.
+remove | title | Entfernt diesen Termin.
+export | filename | Exportiert alle Termine im markdown Format in die angegebene Datei.
 
 ### Notes (Notiz)
 
 Alle commands für Notizen betreffen alle gespeicherten Pages.
 
-**Note commands:**
-
-* add -> Fügt eine neue Notiz der aktuellen Page hinzu.
-* list -> Listet alle bisherigen Notizen.
-* remove -> Entfernt eine Notiz.
-* export -> Exportiert Notizen als markdown Datei.
+command | Argument | Beschreibung
+--- | --- | ---
+add | None | Fügt eine neue Notiz der aktuellen Page hinzu.
+list | None | Listet alle bisherigen Notizen.
+remove | title | Entfernt diese Notiz.
+export | filename | Exportiert alle Notizen im markdown Format in die angegebene Datei.
 
 ### Tasks (Aufgaben)
 
 Die commands für Aufgaben betreffen sowohl die aktuelle Page als auch zurückliegende Pages.
 
-command | Argument |Beschreibung
+command | Argument | Beschreibung
 --- | --- | ---
 add | None | Fügt eine neue Aufgabe zur aktuellen Page hinzu.
 list | status |Listet alle Aufgaben mit dem angegebenen status auf.
