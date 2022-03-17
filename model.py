@@ -139,6 +139,11 @@ class Page:
     entries: PageEntries
 
     def __init__(self, date: Optional[datetime.date] = None) -> None:
+        """Page constructor.
+
+        Args:
+            date (datetime.date, optional): date of page. Defaults to None.
+        """
         if date is None:
             self.date = datetime.date.today()
         else:
@@ -147,30 +152,88 @@ class Page:
         self.entries: PageEntries = {"Appointment": [], "Note": [], "Task": []}
 
     def __str__(self) -> str:
+        """Returns page as string.
+
+        Returns:
+            str: date of page in isoformat
+        """
         return self.date.isoformat()
 
     def __repr__(self) -> str:
+        """Return human readable page representation.
+
+        Returns:
+            str: page representation
+        """
         return f"Page({self.date})"
 
     def __rich__(self) -> dict:
+        """Returns page dict for output using rich.
+
+        Returns:
+            dict: page dict
+        """
         return self.to_dict()
 
     def __eq__(self, other: Page) -> bool:
+        """Checks for equivalence with annother page.
+
+        Args:
+            other (Page): other page
+
+        Returns:
+            bool: equivalence result
+        """
         return self.to_dict() == other.to_dict()
 
     def appointments(self) -> Iterator[Appointment]:
+        """Iterates over all Appointments.
+
+        Returns:
+            _type_: Appointment
+
+        Yields:
+            Iterator[Appointment]: Iterator of Appointments
+        """
         page_appointments = self.entries["Appointment"]
         return iter(page_appointments)
 
     def notes(self) -> Iterator[Note]:
+        """Iterates over all Notes.
+
+        Returns:
+            _type_: Note
+
+        Yields:
+            Iterator[Appointment]: Iterator Notes
+        """
         page_notes = self.entries["Note"]
         return iter(page_notes)
 
     def tasks(self) -> Iterator[Task]:
+        """Iterates over all Tasks.
+
+        Returns:
+            _type_: Task
+
+        Yields:
+            Iterator[Appointment]: Iterator of Tasks
+        """
         page_tasks = self.entries["Task"]
         return iter(page_tasks)
 
     def get_by_itemtype(self, item_type: type) -> Iterator[Item]:
+        """Iterates over all items of an given type.
+
+        Args:
+            item_type (type): item type
+
+        Raises:
+            UnknownItemType: unknown item type was given
+
+        Yields:
+            Iterator[Item]: Iterator of item_type
+        """
         type_name = item_type.__name__
         if type_name in REGISTERED_ITEMS:
             items = self.entries[type_name]
@@ -180,6 +243,14 @@ class Page:
             raise UnknownItemType(f"unknown item type {item_type}")
 
     def add(self, item: Item):
+        """Adds item to page.
+
+        Args:
+            item (Item): item to add
+
+        Raises:
+            UnknownItemType: unknown item type was given
+        """
         type_name = item.__class__.__name__
         if type_name in self.entries:
             self.entries[type_name].append(item)
@@ -187,6 +258,15 @@ class Page:
             raise UnknownItemType(f"Unknown item type {type_name}")
 
     def remove(self, item: Item):
+        """Removes item from page.
+
+        Args:
+            item (Item): item to remove
+
+        Raises:
+            ValueError: item was'nt found
+            UnknownItemType: unknown item type was given
+        """
         type_name = item.__class__.__name__
         if type_name in self.entries:
             if item in self.entries[type_name]:
@@ -197,6 +277,11 @@ class Page:
             raise UnknownItemType(f"Unknown item type {type_name}")
 
     def to_dict(self) -> dict:
+        """Returns page as a dict.
+
+        Returns:
+            dict: page dict
+        """
         page_dict = dict()
         page_dict["date"] = self.date
         page_dict["entries"] = dict()
@@ -208,6 +293,14 @@ class Page:
 
     @staticmethod
     def from_dict(page_dict) -> Page:
+        """Generates page from dict.
+
+        Args:
+            page_dict (_type_): page to generate from
+
+        Returns:
+            Page: generated page
+        """
         date = page_dict["date"]
         page = Page(date)
         for item_type, record_list in page_dict["entries"].items():
