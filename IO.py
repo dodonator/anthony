@@ -136,13 +136,13 @@ def daily_page(path: Path) -> Page:
     return today_page
 
 
-def save_page(path: Path, page: Page):
-    """Saves page to given path.
+def save_page(page: Page):
+    """Saves page.
 
     Args:
-        path (Path): path to save at
         page (Page): page to save
     """
+    path = page_to_path(page)
     page_dict = page.to_dict()
     with path.open("w") as file:
         dump(page_dict, file, Dumper=Dumper)
