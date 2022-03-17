@@ -83,6 +83,14 @@ def last_recent_page(path: Path) -> Optional[Page]:
 
 
 def page_to_path(page: Page) -> Path:
+    """Generates path to save page at.
+
+    Args:
+        page (Page): page to save
+
+    Returns:
+        Path: path at which the page will be saved
+    """
     filename: str = f"{page.date.isoformat()}.yaml"
     year: int = page.date.year
     path: Path = DIRECTORY / str(year) / filename
@@ -90,6 +98,14 @@ def page_to_path(page: Page) -> Path:
 
 
 def get_current_page(path: Path) -> Page:
+    """Returns the current page.
+
+    Args:
+        path (Path): source path
+
+    Returns:
+        Page: last saved page or new page
+    """
     last_page = last_recent_page(path)
     if last_page is None:
         new_page = Page()
@@ -99,6 +115,16 @@ def get_current_page(path: Path) -> Page:
 
 
 def daily_page(path: Path) -> Page:
+    """Returns page for today.
+
+    Loads the page for the current date or creates a new page.
+
+    Args:
+        path (Path): source path
+
+    Returns:
+        Page: page for today
+    """
     today = datetime.date.today()
     last_page = last_recent_page(path)
     if last_page is None:
@@ -111,14 +137,28 @@ def daily_page(path: Path) -> Page:
 
 
 def save_page(path: Path, page: Page):
-    """Saves a page to a given path."""
+    """Saves page to given path.
+
+    Args:
+        path (Path): path to save at
+        page (Page): page to save
+    """
     page_dict = page.to_dict()
     with path.open("w") as file:
         dump(page_dict, file, Dumper=Dumper)
 
 
 def load_page(path: Path) -> Optional[Page]:
-    """Loads a page from a given path."""
+    """Loads page from given path.
+
+    Returns None if the file at the given path was empty.
+
+    Args:
+        path (Path): path to load from
+
+    Returns:
+        Optional[Page]: loaded page
+    """
     with path.open("r") as file:
         page_dict = load(file, Loader=Loader)
 
@@ -128,6 +168,14 @@ def load_page(path: Path) -> Optional[Page]:
 
 
 def aggregate_pages(path: Path) -> Iterator[Page]:
+    """Aggregates all pages from source path.
+
+    Args:
+        path (Path): source path
+
+    Yields:
+        Iterator[Page]: Iterator of all pages
+    """
     all_page_files = extract_page_files(path)
     for path in all_page_files:
         page: Page | None = load_page(path)
@@ -136,12 +184,29 @@ def aggregate_pages(path: Path) -> Iterator[Page]:
 
 
 def aggregate_by_itemtype(path: Path, item_type: type) -> Iterator[Item]:
+    """Aggregates all items of an given item type.
+
+    Args:
+        path (Path): source path
+        item_type (type): type of items to aggregate
+
+    Yields:
+        Iterator[Item]: all items of given type
+    """
     for page in aggregate_pages(path):
         for item in page.get_by_itemtype(item_type):
             yield item
 
 
 def aggregate_notes(path: Path) -> Iterator[Note]:
+    """Aggregates all notes from given path.
+
+    Args:
+        path (Path): source path
+
+    Yields:
+        Iterator[Note]: all notes at given source path
+    """
     for page in aggregate_pages(path):
         for note in page.notes():
             yield note
