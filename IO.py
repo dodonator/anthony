@@ -1,13 +1,13 @@
 import datetime
 import re
 from pathlib import Path
-from typing import Generator, List, Optional
+from typing import Generator, Iterator, List, Optional
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
 from yaml import dump, load
 
-from model import Page
+from model import Note, Page
 
 # file directory example:
 #
@@ -124,3 +124,14 @@ def load_page(path: Path) -> Optional[Page]:
     if page_dict is not None:
         page = Page.from_dict(page_dict)
         return page
+
+
+def aggregate_notes(path: Path) -> Iterator[Note]:
+    all_page_files = extract_page_files(path)
+    for path in all_page_files:
+        page: Page | None = load_page(path)
+        if page is None:
+            continue
+
+        for note in page.notes():
+            yield note
