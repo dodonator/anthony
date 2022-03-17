@@ -60,37 +60,37 @@ class Page:
 
 ## CLI commands
 
-```anthony [Appointment | Note | Task] [command]```
+```anthony [Appointment | Note | Task] [Befehl] [Argument]```
 
 ### Appointment (Termin)
 
-Die commands für Aufgaben betreffen sowohl die Page für den aktuellen Tag, als auch die Pages vergangener Tage.
+Die Befehle für Aufgaben betreffen sowohl die Page für den aktuellen Tag, als auch die Pages vergangener Tage.
 
-command | Argument | Beschreibung
+Befehl | Argument | Beschreibung
 --- | --- | ---
-add | None | Fügt einen neuen Termin hinzu der entsprechenden Page hinzu.
+add | | Fügt einen neuen Termin hinzu der entsprechenden Page hinzu.
 list | date | Listet alle Termine am angegebenen Tag auf.
 remove | title | Entfernt diesen Termin.
 export | filename | Exportiert alle Termine im markdown Format in die angegebene Datei.
 
-### Notes (Notiz)
+### Note (Notiz)
 
-Alle commands für Notizen betreffen alle gespeicherten Pages.
+Alle Befehle für Notizen betreffen alle gespeicherten Pages.
 
-command | Argument | Beschreibung
+Befehl | Argument | Beschreibung
 --- | --- | ---
-add | None | Fügt eine neue Notiz der aktuellen Page hinzu.
-list | None | Listet alle bisherigen Notizen.
+add | | Fügt eine neue Notiz der aktuellen Page hinzu.
+list | | Listet alle bisherigen Notizen.
 remove | title | Entfernt diese Notiz.
 export | filename | Exportiert alle Notizen im markdown Format in die angegebene Datei.
 
-### Tasks (Aufgaben)
+### Task (Aufgaben)
 
-Die commands für Aufgaben betreffen sowohl die aktuelle Page als auch zurückliegende Pages.
+Die Befehle für Aufgaben betreffen sowohl die aktuelle Page als auch zurückliegende Pages.
 
-command | Argument | Beschreibung
+Befehl | Argument | Beschreibung
 --- | --- | ---
-add | None | Fügt eine neue Aufgabe zur aktuellen Page hinzu.
+add | | Fügt eine neue Aufgabe zur aktuellen Page hinzu.
 list | status |Listet alle Aufgaben mit dem angegebenen status auf.
 remove | title | Entfernt Aufgabe mit dem gegebenen Titel.
 export | filename | Exportiert Aufgabe im markdown Format in die angegebene Datei.
