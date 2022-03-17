@@ -18,6 +18,10 @@ class Item(BaseModel):
 
     @validator("id", pre=True, always=True)
     def id_must_be_valid_uuid(cls, v):
+        """Validates item id
+
+        Ensures item id is always a valid uuid using pydantic.
+        """
         if v is not None:
             v = UUID(v).hex
         else:
