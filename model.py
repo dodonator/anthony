@@ -172,6 +172,15 @@ class Page:
         page_tasks = self.entries["Task"]
         return iter(page_tasks)
 
+    def get_by_itemtype(self, item_type: type) -> Iterator[Item]:
+        type_name = item_type.__name__
+        if type_name in REGISTERED_ITEMS:
+            items = self.entries[type_name]
+            for item in items:
+                yield item
+        else:
+            raise UnknownItemType(f"unknown item type {item_type}")
+
     def add(self, item: Item):
         type_name = item.__class__.__name__
         if type_name in self.entries:
