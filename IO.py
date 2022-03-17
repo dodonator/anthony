@@ -83,8 +83,9 @@ def last_recent_page(path: Path) -> Optional[Page]:
 
 
 def page_to_path(page: Page) -> Path:
+    filename: str = f"{page.date.isoformat()}.yaml"
     year: int = page.date.year
-    path: Path = DIRECTORY / str(year) / page.filename
+    path: Path = DIRECTORY / str(year) / filename
     return path
 
 
