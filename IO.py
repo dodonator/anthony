@@ -1,7 +1,7 @@
 import datetime
 import re
 from pathlib import Path
-from typing import Generator, Iterator, List, Optional
+from typing import Generator, Iterator, Optional
 
 from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
@@ -72,7 +72,7 @@ def last_recent_page(path: Path) -> Optional[Page]:
         Optional[Page]: last page (or None if no page was found)
     """
     # load all pages
-    page_files: List[Path] = extract_page_files(path)
+    page_files: list[Path] = extract_page_files(path)
     # sort pages by date
     sorted_files = sorted(page_files, key=lambda p: p.stem, reverse=True)
     # get last page
