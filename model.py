@@ -65,6 +65,11 @@ class Item(BaseModel):
         return self.id == other.id
 
     def __hash__(self) -> int:
+        """Returns hash value of Item.
+
+        Returns:
+            int: hash value
+        """
         if self.id is None:
             self.id = uuid4().hex
 
