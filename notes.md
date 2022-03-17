@@ -60,24 +60,42 @@ class Page:
 
 ## CLI commands
 
-* add [appointment, note, task] - Fügt ein neues Item der aktuellen Page hinzu.
-* exit - Beendet das Programm
-* export [path] - Exportiert die aktuelle Page als markdown Datei.
-* list [appontment, note, task, _] - Listet alle Items eines Typs oder alle Items der aktuellen Page auf.
-* show [title] - Liefert genauere Informationen zu einem Item.
+```anthony [Appointment | Note | Task] [command]```
 
-### Task Actions
+### Appointment (Termin)
 
-Die folgenden Aktionen können auf Tasks der aktuellen Page ausgeführt werden. Jede Aktion ist dabei auch als command vorhanden.
+Alle commands für Termine betreffen die aktuelle Page.
 
-* complete task
-  Der Task wird beendet ( `done = True` , `active = False` ). Ein Karma Punkt wird generiert.
+**Appointment commands:**
 
-* cancel task
-  Der Task wird abgebrochen ( `done = False` , `active = False` ) und an späteren Tagen nicht mehr angezeigt. Ein Karma Punkt wird abgezogen.
+* add -> Fügt einen neuen Termin hinzu
+* list -> Listet alle Termine der aktuellen Page auf.
+* remove -> Entfernt Termin von der aktuellen Page.
+* export -> Exportiert Termine als markdown Datei.
 
-* move task
-  Der Task wird verschoben ( `done = True` , `active = True` ). Der Task kann somit am aktuellen Tag nicht mehr vollendet werden. Da der Task als `active` markiert ist, wird er am nächsten Tag wieder geladen werden. Ein Karma Punkt wird abgezogen.
+### Notes (Notiz)
 
-* repeat task [date]
-  Der Task wird wiederholt (sofern er abgeschlossen oder abgebrochen ist). Standartmäßig wird der Task am folgenden Tag als offen ( `done = False` , `active = True` ) angezeigt. Alternativ kann das Datum angegeben werden, zu dem der Task wiederholt werden soll.
+Alle commands für Notizen betreffen alle gespeicherten Pages.
+
+**Note commands:**
+
+* add -> Fügt eine neue Notiz der aktuellen Page hinzu.
+* list -> Listet alle bisherigen Notizen.
+* remove -> Entfernt eine Notiz.
+* export -> Exportiert Notizen als markdown Datei.
+
+### Tasks (Aufgaben)
+
+Die commands für Aufgaben betreffen sowohl die aktuelle Page als auch zurückliegende Pages.
+
+command | Argument |Beschreibung
+--- | --- | ---
+add | None | Fügt eine neue Aufgabe zur aktuellen Page hinzu.
+list | status |Listet alle Aufgaben mit dem angegebenen status auf.
+remove | title | Entfernt Aufgabe mit dem gegebenen Titel.
+export | filename | Exportiert Aufgabe im markdown Format in die angegebene Datei.
+status | title | Gibt den Status der Aufgabe mit diesem Titel an.
+complete | title | Markiert diese Aufgabe als erledigt.
+cancel | title | Bricht diese Aufgabe ab.
+repeat | title | Markiert diese Aufgabe als erledigt und legt sie als Wiedervorlage an.
+postpone | title | Bricht die Aufgabe für heute ab und verschiebt sie auf die nächste Page.
