@@ -126,6 +126,14 @@ def load_page(path: Path) -> Optional[Page]:
         return page
 
 
+def aggregate_pages(path: Path) -> Iterator[Page]:
+    all_page_files = extract_page_files(path)
+    for path in all_page_files:
+        page: Page | None = load_page(path)
+        if page is not None:
+            yield page
+
+
 def aggregate_notes(path: Path) -> Iterator[Note]:
     all_page_files = extract_page_files(path)
     for path in all_page_files:
