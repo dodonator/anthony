@@ -100,6 +100,14 @@ def last_recent_page(path: Path) -> Optional[Page]:
 
 
 def date_to_path(date: datetime.date) -> Path:
+    """Generates path from given date.
+
+    Args:
+        date (datetime.date): date for page
+
+    Returns:
+        Path: path for page file
+    """
     filename: str = f"{date.isoformat()}.yaml"
     year: int = date.year
     path: Path = DIRECTORY / str(year) / filename
