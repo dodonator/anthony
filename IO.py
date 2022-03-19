@@ -198,6 +198,18 @@ def load_page(path: Path) -> Optional[Page]:
         return page
 
 
+def safe_load(path: Path) -> Page:
+    date = datetime.date.fromisoformat(path.stem.rstrip(".yaml"))
+    if not path.exists():
+        path.touch()
+        page = Page(date)
+    else:
+        page = load_page(path)
+        if page is None:
+            page = Page(date)
+    return page
+
+
 def aggregate_pages(path: Path) -> Iterator[Page]:
     """Aggregates all pages from source path.
 
