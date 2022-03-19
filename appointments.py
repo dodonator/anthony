@@ -2,7 +2,7 @@ from datetime import datetime
 
 import typer
 
-from IO import date_to_path, load_page, save_page
+from IO import date_to_path, safe_load, save_page
 from model import Appointment, Page
 
 app = typer.Typer()
@@ -13,9 +13,7 @@ def add():
     appointment: Appointment = input_appointment()
     date = appointment.start.date()
     path = date_to_path(date)
-    page: Page | None = load_page(path)
-    if page is None:
-        page = Page(date)
+    page: Page = safe_load(path)
     page.add(appointment)
     save_page(page)
     typer.echo(f"saved appointment {appointment} at {path}")
