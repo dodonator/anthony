@@ -1,8 +1,8 @@
-from datetime import datetime
+from datetime import date, datetime
 
 import typer
 
-from IO import date_to_path, safe_load, save_page
+from IO import DIRECTORY, aggregate_pages, date_to_path, safe_load, save_page
 from model import Appointment, Page
 
 app = typer.Typer()
@@ -20,8 +20,12 @@ def add():
 
 
 @app.command()
-def list():
-    pass
+def list(date_str: str):
+    d: date = date.fromisoformat(date_str)
+    pages = aggregate_pages(DIRECTORY)
+    future_pages = [p for p in pages if p.date >= d]
+    for page in future_pages:
+        typer.echo(page)
 
 
 @app.command()
