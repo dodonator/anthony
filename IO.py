@@ -115,9 +115,8 @@ def page_to_path(page: Page) -> Path:
     Returns:
         Path: path at which the page will be saved
     """
-    filename: str = f"{page.date.isoformat()}.yaml"
-    year: int = page.date.year
-    path: Path = DIRECTORY / str(year) / filename
+    date: datetime.date = page.date
+    path: Path = date_to_path(date)
     return path
 
 
