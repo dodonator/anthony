@@ -241,7 +241,7 @@ def aggregate_by_itemtype(path: Path, item_type: type) -> Iterator[Item]:
             yield item
 
 
-def aggregate_appointment(path: Path) -> Iterator[Appointment]:
+def aggregate_appointments(path: Path) -> Iterator[Appointment]:
     """Aggregates all appointments from given path.
 
     Args:
