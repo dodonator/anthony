@@ -16,7 +16,7 @@ def add():
     page: Page = safe_load(path)
     page.add(appointment)
     save_page(page)
-    typer.echo(f"saved appointment {appointment} at {path}")
+    typer.echo(f"added appointment {appointment} to  page {page}")
 
 
 @app.command()
