@@ -7,7 +7,7 @@ from yaml import CDumper as Dumper
 from yaml import CLoader as Loader
 from yaml import dump, load
 
-from model import Item, Note, Page
+from model import Appointment, Item, Note, Page
 
 # file directory example:
 #
@@ -239,6 +239,20 @@ def aggregate_by_itemtype(path: Path, item_type: type) -> Iterator[Item]:
     for page in aggregate_pages(path):
         for item in page.get_by_itemtype(item_type):
             yield item
+
+
+def aggregate_appointment(path: Path) -> Iterator[Appointment]:
+    """Aggregates all appointments from given path.
+
+    Args:
+        path (Path): source path
+
+    Yields:
+        Iterator[Appointment]: all appointments at given source path
+    """
+    for page in aggregate_pages(path):
+        for appointment in page.appointments():
+            yield appointment
 
 
 def aggregate_notes(path: Path) -> Iterator[Note]:
