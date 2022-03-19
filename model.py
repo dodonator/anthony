@@ -15,6 +15,7 @@ class Item(BaseModel):
     id: Optional[str] = None
     title: str
     content: str
+    page: Optional[Page] = None
 
     @validator("id", pre=True, always=True)
     def id_must_be_valid_uuid(cls, v):
@@ -263,6 +264,7 @@ class Page:
         type_name = item.__class__.__name__
         if type_name in self.entries:
             self.entries[type_name].append(item)
+            item.page = self
         else:
             raise UnknownItemType(f"Unknown item type {type_name}")
 
