@@ -99,6 +99,13 @@ def last_recent_page(path: Path) -> Optional[Page]:
             return page
 
 
+def date_to_path(date: datetime.date) -> Path:
+    filename: str = f"{date.isoformat()}.yaml"
+    year: int = date.year
+    path: Path = DIRECTORY / str(year) / filename
+    return path
+
+
 def page_to_path(page: Page) -> Path:
     """Generates path to save page at.
 
