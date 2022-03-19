@@ -62,6 +62,23 @@ def extract_page_files(path: Path) -> list[Path]:
     return page_files
 
 
+def create_page_file(date: datetime.date) -> Path:
+    """Creates page file for given date.
+
+    Args:
+        date (datetime.date): date of Page
+
+    Returns:
+        Path: path to page file
+    """
+    page = Page(date)
+    path = page_to_path(page)
+    if not path.exists():
+        path.touch()
+        save_page(page)
+    return path
+
+
 def last_recent_page(path: Path) -> Optional[Page]:
     """Returns the last recent page.
 
