@@ -29,8 +29,18 @@ def list(date_str: str):
 
 
 @app.command()
-def remove():
-    pass
+def remove(appointment_title: str):
+    appointments = aggregate_appointments(DIRECTORY)
+    for appointment in appointments:
+        if appointment.title == appointment_title:
+            break
+    else:
+        return
+    d = appointment.start.date()
+    path = date_to_path(d)
+    page = safe_load(path)
+    page.remove(appointment)
+    save_page(page)
 
 
 def input_appointment() -> Appointment:
